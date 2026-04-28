@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Compilers on Terminal</title>
+    <link>http://localhost:1313/compiler/</link>
+    <description>Recent content in Compilers on Terminal</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 01 Jan 2025 12:00:00 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/compiler/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>编译器入门：词法分析是什么</title>
+      <link>http://localhost:1313/compiler/1/</link>
+      <pubDate>Wed, 01 Jan 2025 12:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/compiler/1/</guid>
+      <description>&lt;p&gt;正文开始&amp;hellip;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
