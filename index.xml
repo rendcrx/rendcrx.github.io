@@ -9,11 +9,11 @@
     <lastBuildDate>Tue, 28 Apr 2026 17:51:41 +0800</lastBuildDate>
     <atom:link href="https://rendcrx.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>chibicc</title>
-      <link>https://rendcrx.github.io/posts/compiler/first/</link>
+      <title>tokenize</title>
+      <link>https://rendcrx.github.io/posts/compiler/tcc1/</link>
       <pubDate>Tue, 28 Apr 2026 17:51:41 +0800</pubDate>
-      <guid>https://rendcrx.github.io/posts/compiler/first/</guid>
-      <description>&lt;p&gt;TODO&lt;/p&gt;</description>
+      <guid>https://rendcrx.github.io/posts/compiler/tcc1/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;最初版本&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;h1 id=&#34;tcc-的词法分析一&#34;&gt;tcc 的词法分析(一)&lt;/h1&gt;&#xA;&lt;p&gt;一个语言的词法分析，三个状态图就可以了：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;标识符&lt;/li&gt;&#xA;&lt;li&gt;常量&lt;/li&gt;&#xA;&lt;li&gt;符号&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;tinycc 的常量甚至不做处理，只进行了标识符和符号的识别&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;可能是在词法分析的地方再处理&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;空白&#34;&gt;空白&lt;/h2&gt;&#xA;&lt;p&gt;利用一个死循环，持续探测到非空白时才退出&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;while(1) {&#xA;    c = inp();&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;每次进入的时候，需要取一次字符&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;} else if (c != &amp;#39; &amp;#39; &amp;amp; c != 9)&#xA;  break;&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;退出条件&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;标识符&#34;&gt;标识符&lt;/h2&gt;&#xA;&lt;p&gt;关键字区分：利用了常见的做法&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;提前将关键字放入到符号表中&lt;/li&gt;&#xA;&lt;li&gt;使用一个状态图来进行判断&lt;/li&gt;&#xA;&lt;li&gt;如果是标识符，再判断符号表中是否已经存在该符号了&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;巧妙的地方：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;标识符的 TOKEN 类型标识不是乱取的&lt;/li&gt;&#xA;&lt;li&gt;而是符号表中，该符号对应的位置索引&lt;/li&gt;&#xA;&lt;li&gt;通过该标识符的 TOKEN 数值，既可以判断类型，也可以获取地址&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;符号&#34;&gt;符号&lt;/h2&gt;&#xA;&lt;p&gt;对于单符号和双符号，利用 &lt;code&gt;ungetc&lt;/code&gt; 来纠错&lt;/p&gt;&#xA;&lt;p&gt;巧妙的地方：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;对于大部分的单符号，直接用符号值表示类型（同样可以获取到值）&lt;/li&gt;&#xA;&lt;li&gt;对于双符号和 &lt;code&gt;&amp;lt;&lt;/code&gt;, &lt;code&gt;&amp;gt;&lt;/code&gt; 直接用二进制码表示类型，方便代码生成？&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;加速&#34;&gt;加速&lt;/h1&gt;&#xA;&lt;p&gt;对于用到数值的地方，尽量做到一值两用，甚至三用&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;减少查表：符号表中，标识符直接对应于符号表的索引&lt;/li&gt;&#xA;&lt;li&gt;减少转换：运算符中，类型直接就是运算符&lt;/li&gt;&#xA;&lt;li&gt;减少映射：生成代码的时候不用类型重新映射二进制代码了，类型就是二进制代码&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
     </item>
   </channel>
 </rss>

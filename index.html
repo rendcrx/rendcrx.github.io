@@ -147,7 +147,7 @@
     
       <article class="post on-list">
         <h2 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/first/">chibicc</a>
+          <a href="https://rendcrx.github.io/posts/compiler/tcc1/">tokenize</a>
         </h2>
 
         <div class="post-meta"><time class="post-date">2026-04-28</time></div>
@@ -157,7 +157,7 @@
             
             #<a href="https://rendcrx.github.io/tags/compiler/">compiler</a>&nbsp;
             
-            #<a href="https://rendcrx.github.io/tags/chibicc/">chibicc</a>&nbsp;
+            #<a href="https://rendcrx.github.io/tags/tinycc/">tinycc</a>&nbsp;
             
           </span>
         
@@ -167,13 +167,65 @@
 
         <div class="post-content">
           
-            <p>TODO</p>
+            <blockquote>
+<p>最初版本</p>
+</blockquote>
+<h1 id="tcc-的词法分析一">tcc 的词法分析(一)</h1>
+<p>一个语言的词法分析，三个状态图就可以了：</p>
+<ol>
+<li>标识符</li>
+<li>常量</li>
+<li>符号</li>
+</ol>
+<p>tinycc 的常量甚至不做处理，只进行了标识符和符号的识别</p>
+<ul>
+<li>可能是在词法分析的地方再处理</li>
+</ul>
+<h2 id="空白">空白</h2>
+<p>利用一个死循环，持续探测到非空白时才退出</p>
+<pre tabindex="0"><code>while(1) {
+    c = inp();
+</code></pre><ul>
+<li>每次进入的时候，需要取一次字符</li>
+</ul>
+<pre tabindex="0"><code>} else if (c != &#39; &#39; &amp; c != 9)
+  break;
+</code></pre><ul>
+<li>退出条件</li>
+</ul>
+<h2 id="标识符">标识符</h2>
+<p>关键字区分：利用了常见的做法</p>
+<ul>
+<li>提前将关键字放入到符号表中</li>
+<li>使用一个状态图来进行判断</li>
+<li>如果是标识符，再判断符号表中是否已经存在该符号了</li>
+</ul>
+<p>巧妙的地方：</p>
+<ul>
+<li>标识符的 TOKEN 类型标识不是乱取的</li>
+<li>而是符号表中，该符号对应的位置索引</li>
+<li>通过该标识符的 TOKEN 数值，既可以判断类型，也可以获取地址</li>
+</ul>
+<h2 id="符号">符号</h2>
+<p>对于单符号和双符号，利用 <code>ungetc</code> 来纠错</p>
+<p>巧妙的地方：</p>
+<ul>
+<li>对于大部分的单符号，直接用符号值表示类型（同样可以获取到值）</li>
+<li>对于双符号和 <code>&lt;</code>, <code>&gt;</code> 直接用二进制码表示类型，方便代码生成？</li>
+</ul>
+<h1 id="加速">加速</h1>
+<p>对于用到数值的地方，尽量做到一值两用，甚至三用</p>
+<ol>
+<li>减少查表：符号表中，标识符直接对应于符号表的索引</li>
+<li>减少转换：运算符中，类型直接就是运算符</li>
+<li>减少映射：生成代码的时候不用类型重新映射二进制代码了，类型就是二进制代码</li>
+</ol>
           
         </div>
 
         
           <div>
-            <a class="read-more button inline" href="/posts/compiler/first/">[Read more]</a>
+            <a class="read-more button inline" href="/posts/compiler/tcc1/">[Read more]</a>
           </div>
         
       </article>
