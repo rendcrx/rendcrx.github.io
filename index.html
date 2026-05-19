@@ -147,6 +147,82 @@
     
       <article class="post on-list">
         <h2 class="post-title">
+          <a href="https://rendcrx.github.io/posts/compiler/tcc2/">tinycc</a>
+        </h2>
+
+        <div class="post-meta"><time class="post-date">2026-05-19</time></div>
+
+        
+          <span class="post-tags">
+            
+            #<a href="https://rendcrx.github.io/tags/compiler/">compiler</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+
+        <div class="post-content">
+          
+            <h1 id="tcc-的词法分析二">tcc 的词法分析(二)</h1>
+<p>宏只处理 define</p>
+<p>做法是如果遇到宏，就跳转过去读，作为最新的 token 然后返回</p>
+<h2 id="结构">结构</h2>
+<p><strong>符号表</strong></p>
+<ul>
+<li><code>char *idtable</code> 是一个字符数组，存储着每一个符号。符号之间用 &lsquo;\0&rsquo; 分割</li>
+<li><code>char *idptr, *idlast</code> 辅助指针
+<ul>
+<li>idptr 指向字符数组第一个空位置</li>
+<li>idlast 指向符号表中最后的一个符号(插入新符号的时候，重置该指针)</li>
+</ul>
+</li>
+</ul>
+<p>tinycc 在处理文本的时候，除了运算符和数字，都视为符号</p>
+<p>返回的时候 token 表明了符号位于符号表的位置（第几个符号）</p>
+<ul>
+<li>从 256 开始记的</li>
+<li>前面的属于关键字</li>
+<li>因为字符直接使用数值作为类型，因此根据 ascii 从 256 开始是符号(包括关键字)</li>
+</ul>
+<p>步骤：</p>
+<ol>
+<li>只要第一个判断属于符号，进入符号的状态机，逐个字符插入符号表</li>
+<li>比较判断是否为关键字，如果是的话，保持 idptr 不变，同时更新 tok</li>
+<li>如果不是关键字的话，更新 idptr</li>
+<li>判断该符号是否位于宏替换的范围，如果是的话，不要立即返回</li>
+<li>记录当前输入流读取位置，到宏栈中（维护了一个栈）</li>
+<li>设置输入流的位置到宏替换的位置</li>
+<li>重新调用 next() 来读取替换的符号</li>
+<li>直到行尾，替换结束，根据宏栈的地址，跳转回来（允许嵌套宏）</li>
+</ol>
+<p><strong>宏</strong></p>
+<p>步骤：</p>
+<ol>
+<li>如果当前符号是 #, 进入分支</li>
+<li>取下一个符号，如果下一个符号就是 define 关键字（固定 token 类型）</li>
+<li>读取下一个符号到符号表中，同时更新 vat 和 vac, 在该符号位置记录了符号类型和数值</li>
+</ol>
+<ul>
+<li>对于 define 的符号类型就是 VT_DEFINE, 数值就是文件流的位置，就是现在</li>
+</ul>
+<ol start="4">
+<li>一直跳过字符不再读取了，这部分是宏替换的内容。直到读取完换行符为止</li>
+</ol>
+<p>宏替换时：</p>
+          
+        </div>
+
+        
+          <div>
+            <a class="read-more button inline" href="/posts/compiler/tcc2/">[Read more]</a>
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h2 class="post-title">
           <a href="https://rendcrx.github.io/posts/compiler/tcc1/">tinycc</a>
         </h2>
 
@@ -157,8 +233,6 @@
             
             #<a href="https://rendcrx.github.io/tags/compiler/">compiler</a>&nbsp;
             
-            #<a href="https://rendcrx.github.io/tags/tinycc/">tinycc</a>&nbsp;
-            
           </span>
         
 
@@ -168,7 +242,7 @@
         <div class="post-content">
           
             <blockquote>
-<p>最初版本</p>
+<p>tcc&rsquo;s first commit</p>
 </blockquote>
 <h1 id="tcc-的词法分析一">tcc 的词法分析(一)</h1>
 <p>一个语言的词法分析，三个状态图就可以了：</p>
