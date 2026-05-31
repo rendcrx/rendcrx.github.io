@@ -184,8 +184,8 @@
     
       <article class="post on-list">
         <h2 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/12.-%E6%B7%BB%E5%8A%A0-return-%E8%AF%AD%E5%8F%A5/"><ol start="12">
-<li>添加 return 语句</li>
+          <a href="https://rendcrx.github.io/posts/compiler/chibicc/01.-%E6%9C%80%E5%B0%8F%E7%9A%84-c-%E7%BC%96%E8%AF%91%E5%99%A8/"><ol>
+<li>最小的 C 编译器</li>
 </ol>
 </a>
         </h2>
@@ -205,42 +205,43 @@
 
         <div class="post-content">
           
-            <h1 id="return-语句">return 语句</h1>
-<p>这里添加了第一个关键字</p>
-<p>实现上应该用父子状态机</p>
+            <h1 id="最小的-c-编译器">最小的 C 编译器</h1>
+<ol>
+<li>命令行参数接受一个字符串输入作为参数</li>
+</ol>
 <ul>
-<li>识别标识符的是父状态机</li>
-<li>然后再交给子状态机</li>
+<li>要求是数字</li>
 </ul>
-<p>如果功能是包含关系，分层的话可以更好的减少复杂度</p>
-<pre tabindex="0"><code>program    ::= stmt*
-stmt       ::= &#34;return&#34; expr &#34;;&#34;
-             | expr-stmt
-expr-stmt  ::= expr &#34;;&#34;
-expr       ::= equality
-equality   ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
-relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
-add        ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
-mul        ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
-unary      ::= (&#34;+&#34; | &#34;-&#34;) unary
-             | primary
-primary    ::= &#34;(&#34; expr &#34;)&#34; | NUM
-</code></pre><h1 id="实现">实现</h1>
-<p>在结尾放置一个标号</p>
+<ol start="2">
+<li>这个编译器把这个数字作为返回值来返回</li>
+</ol>
+<h1 id="如何做">如何做</h1>
+<ol>
+<li>C 编译器要求我们必须有一个 main 函数</li>
+<li>C 编译器要求函数的返回值只有一个，用 eax 作为返回值</li>
+</ol>
+<p>所以我们只需要先创建 main 函数：</p>
+<pre tabindex="0"><code>.globl main
+main:
+</code></pre><p>然后把返回值传递给 eax：</p>
+<pre tabindex="0"><code>movl $0, %eax
+</code></pre><p>函数要求返回：</p>
+<pre tabindex="0"><code>ret
+</code></pre>
           
         </div>
 
         
           <div>
-            <a class="read-more button inline" href="/posts/compiler/chibicc/12.-%E6%B7%BB%E5%8A%A0-return-%E8%AF%AD%E5%8F%A5/">[Read more]</a>
+            <a class="read-more button inline" href="/posts/compiler/chibicc/01.-%E6%9C%80%E5%B0%8F%E7%9A%84-c-%E7%BC%96%E8%AF%91%E5%99%A8/">[Read more]</a>
           </div>
         
       </article>
     
       <article class="post on-list">
         <h2 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/11.-%E6%94%AF%E6%8C%81%E5%A4%9A%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/"><ol start="11">
-<li>支持多字母的局部变量</li>
+          <a href="https://rendcrx.github.io/posts/compiler/chibicc/02.-%E6%B7%BB%E5%8A%A0-&#43;-%E5%92%8C---%E8%BF%90%E7%AE%97%E7%AC%A6/"><ol start="2">
+<li>添加 + 和 - 运算符</li>
 </ol>
 </a>
         </h2>
@@ -260,37 +261,27 @@ primary    ::= &#34;(&#34; expr &#34;)&#34; | NUM
 
         <div class="post-content">
           
-            <h1 id="支持多字母的局部变量">支持多字母的局部变量</h1>
-<ol>
-<li>tokenize 识别标识符</li>
-<li>链表形式组织起 Obj，表示局部变量</li>
-<li>引入一个函数的对象，不仅包含了 stmt，还包含了局部变量映射</li>
-</ol>
-<h1 id="代码生成">代码生成</h1>
-<ol>
-<li>判断局部变量的个数，初始化合适的栈大小空间</li>
-<li>为局部变量依次分配映射位置</li>
-<li>代码生成</li>
-</ol>
+            <h1 id="添加--和---运算符">添加 + 和 - 运算符</h1>
+<pre tabindex="0"><code>expr    ::= NUMBER subexpr?
+subexpr ::= + expr
+          | - expr
+</code></pre>
           
         </div>
 
         
           <div>
-            <a class="read-more button inline" href="/posts/compiler/chibicc/11.-%E6%94%AF%E6%8C%81%E5%A4%9A%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/">[Read more]</a>
+            <a class="read-more button inline" href="/posts/compiler/chibicc/02.-%E6%B7%BB%E5%8A%A0-&#43;-%E5%92%8C---%E8%BF%90%E7%AE%97%E7%AC%A6/">[Read more]</a>
           </div>
         
       </article>
     
       <article class="post on-list">
         <h2 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/10.-%E6%94%AF%E6%8C%81%E5%8D%95%E4%B8%AA%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/"><ol start="10">
-<li>支持单个字母的局部变量</li>
-</ol>
-</a>
+          <a href="https://rendcrx.github.io/posts/compiler/tinycc/tcc2/">tinycc</a>
         </h2>
 
-        <div class="post-meta"><time class="post-date">2026-05-31</time></div>
+        <div class="post-meta"><time class="post-date">2026-05-19</time></div>
 
         
           <span class="post-tags">
@@ -305,121 +296,141 @@ primary    ::= &#34;(&#34; expr &#34;)&#34; | NUM
 
         <div class="post-content">
           
-            <h1 id="支持单个字母的局部变量">支持单个字母的局部变量</h1>
-<p>变量：内存的一个别名</p>
+            <h1 id="tcc-的词法分析二">tcc 的词法分析(二)</h1>
+<p>宏只处理 define</p>
+<p>做法是如果遇到宏，就跳转过去读，作为最新的 token 然后返回</p>
+<h2 id="结构">结构</h2>
+<p><strong>符号表</strong></p>
 <ul>
-<li>环境中的一个映射</li>
-<li>变量本质就是一个映射</li>
+<li><code>char *idtable</code> 是一个字符数组，存储着每一个符号。符号之间用 &lsquo;\0&rsquo; 分割</li>
+<li><code>char *idptr, *idlast</code> 辅助指针
+<ul>
+<li>idptr 指向字符数组第一个空位置</li>
+<li>idlast 指向符号表中最后的一个符号(插入新符号的时候，重置该指针)</li>
 </ul>
-<pre tabindex="0"><code>program    ::= stmt*
-stmt       ::= expr-stmt
-expr-stmt  ::= expr &#34;;&#34;
-expr       ::= assign
-assign     ::= equality (&#34;=&#34; assign)?
-equality   ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
-relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
-add        ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
-mul        ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
-unary      ::= (&#34;+&#34; | &#34;-&#34;) unary
-             | primary
-primary    ::= &#34;(&#34; expr &#34;)&#34; | IDENT | NUM
-</code></pre><h1 id="实现">实现</h1>
-<p>这里先用了一个简单的方案：</p>
-          
-        </div>
-
-        
-          <div>
-            <a class="read-more button inline" href="/posts/compiler/chibicc/10.-%E6%94%AF%E6%8C%81%E5%8D%95%E4%B8%AA%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/">[Read more]</a>
-          </div>
-        
-      </article>
-    
-      <article class="post on-list">
-        <h2 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/09.-%E6%8E%A5%E5%8F%97%E5%A4%9A%E4%B8%AA%E9%80%9A%E8%BF%87%E5%88%86%E5%8F%B7%E5%88%86%E5%89%B2%E7%9A%84%E8%AF%AD%E5%8F%A5/"><ol start="9">
-<li>接受多个通过分号分割的语句</li>
-</ol>
-</a>
-        </h2>
-
-        <div class="post-meta"><time class="post-date">2026-05-31</time></div>
-
-        
-          <span class="post-tags">
-            
-            #<a href="https://rendcrx.github.io/tags/compiler/">compiler</a>&nbsp;
-            
-          </span>
-        
-
-        
-
-
-        <div class="post-content">
-          
-            <h1 id="接受多个通过分号分割的语句">接受多个通过分号分割的语句</h1>
-<p>C 语言是通过一系列的语句组合的</p>
-<p>每个语句都进行代码生成</p>
-<p>之间同样通过接口关联</p>
-<pre tabindex="0"><code>program    ::= stmt*
-stmt       ::= expr-stmt
-expr-stmt  ::= expr &#34;;&#34;
-expr       ::= equality
-equality   ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
-relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
-add        ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
-mul        ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
-unary      ::= (&#34;+&#34; | &#34;-&#34;) unary
-             | primary
-primary    ::= &#34;(&#34; expr &#34;)&#34; | NUM
-</code></pre><p>代码生成还是基于 AST 的</p>
-          
-        </div>
-
-        
-          <div>
-            <a class="read-more button inline" href="/posts/compiler/chibicc/09.-%E6%8E%A5%E5%8F%97%E5%A4%9A%E4%B8%AA%E9%80%9A%E8%BF%87%E5%88%86%E5%8F%B7%E5%88%86%E5%89%B2%E7%9A%84%E8%AF%AD%E5%8F%A5/">[Read more]</a>
-          </div>
-        
-      </article>
-    
-      <article class="post on-list">
-        <h2 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/08.-%E5%88%86%E7%A6%BB%E6%96%87%E4%BB%B6/"><ol start="8">
-<li>分离文件</li>
-</ol>
-</a>
-        </h2>
-
-        <div class="post-meta"><time class="post-date">2026-05-31</time></div>
-
-        
-          <span class="post-tags">
-            
-            #<a href="https://rendcrx.github.io/tags/compiler/">compiler</a>&nbsp;
-            
-          </span>
-        
-
-        
-
-
-        <div class="post-content">
-          
-            <h1 id="分离文件">分离文件</h1>
-<p>模块化文件：</p>
+</li>
+</ul>
+<p>tinycc 在处理文本的时候，除了运算符和数字，都视为符号</p>
+<p>返回的时候 token 表明了符号位于符号表的位置（第几个符号）</p>
+<ul>
+<li>从 256 开始记的</li>
+<li>前面的属于关键字</li>
+<li>因为字符直接使用数值作为类型，因此根据 ascii 从 256 开始是符号(包括关键字)</li>
+</ul>
+<p>步骤：</p>
 <ol>
-<li>tokenize</li>
-<li>parse</li>
-<li>codegen</li>
+<li>只要第一个判断属于符号，进入符号的状态机，逐个字符插入符号表</li>
+<li>比较判断是否为关键字，如果是的话，保持 idptr 不变，同时更新 tok</li>
+<li>如果不是关键字的话，更新 idptr</li>
+<li>判断该符号是否位于宏替换的范围，如果是的话，不要立即返回</li>
+<li>记录当前输入流读取位置，到宏栈中（维护了一个栈）</li>
+<li>设置输入流的位置到宏替换的位置</li>
+<li>重新调用 next() 来读取替换的符号</li>
+<li>直到行尾，替换结束，根据宏栈的地址，跳转回来（允许嵌套宏）</li>
+</ol>
+<p><strong>宏</strong></p>
+<p>步骤：</p>
+<ol>
+<li>如果当前符号是 #, 进入分支</li>
+<li>取下一个符号，如果下一个符号就是 define 关键字（固定 token 类型）</li>
+<li>读取下一个符号到符号表中，同时更新 vat 和 vac, 在该符号位置记录了符号类型和数值</li>
+</ol>
+<ul>
+<li>对于 define 的符号类型就是 VT_DEFINE, 数值就是文件流的位置，就是现在</li>
+</ul>
+<ol start="4">
+<li>一直跳过字符不再读取了，这部分是宏替换的内容。直到读取完换行符为止</li>
+</ol>
+<p>宏替换时：</p>
+          
+        </div>
+
+        
+          <div>
+            <a class="read-more button inline" href="/posts/compiler/tinycc/tcc2/">[Read more]</a>
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h2 class="post-title">
+          <a href="https://rendcrx.github.io/posts/compiler/tinycc/tcc1/">tinycc</a>
+        </h2>
+
+        <div class="post-meta"><time class="post-date">2026-04-28</time></div>
+
+        
+          <span class="post-tags">
+            
+            #<a href="https://rendcrx.github.io/tags/compiler/">compiler</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+
+        <div class="post-content">
+          
+            <blockquote>
+<p>tcc&rsquo;s first commit</p>
+</blockquote>
+<h1 id="tcc-的词法分析一">tcc 的词法分析(一)</h1>
+<p>一个语言的词法分析，三个状态图就可以了：</p>
+<ol>
+<li>标识符</li>
+<li>常量</li>
+<li>符号</li>
+</ol>
+<p>tinycc 的常量甚至不做处理，只进行了标识符和符号的识别</p>
+<ul>
+<li>可能是在词法分析的地方再处理</li>
+</ul>
+<h2 id="空白">空白</h2>
+<p>利用一个死循环，持续探测到非空白时才退出</p>
+<pre tabindex="0"><code>while(1) {
+    c = inp();
+</code></pre><ul>
+<li>每次进入的时候，需要取一次字符</li>
+</ul>
+<pre tabindex="0"><code>} else if (c != &#39; &#39; &amp; c != 9)
+  break;
+</code></pre><ul>
+<li>退出条件</li>
+</ul>
+<h2 id="标识符">标识符</h2>
+<p>关键字区分：利用了常见的做法</p>
+<ul>
+<li>提前将关键字放入到符号表中</li>
+<li>使用一个状态图来进行判断</li>
+<li>如果是标识符，再判断符号表中是否已经存在该符号了</li>
+</ul>
+<p>巧妙的地方：</p>
+<ul>
+<li>标识符的 TOKEN 类型标识不是乱取的</li>
+<li>而是符号表中，该符号对应的位置索引</li>
+<li>通过该标识符的 TOKEN 数值，既可以判断类型，也可以获取地址</li>
+</ul>
+<h2 id="符号">符号</h2>
+<p>对于单符号和双符号，利用 <code>ungetc</code> 来纠错</p>
+<p>巧妙的地方：</p>
+<ul>
+<li>对于大部分的单符号，直接用符号值表示类型（同样可以获取到值）</li>
+<li>对于双符号和 <code>&lt;</code>, <code>&gt;</code> 直接用二进制码表示类型，方便代码生成？</li>
+</ul>
+<h1 id="加速">加速</h1>
+<p>对于用到数值的地方，尽量做到一值两用，甚至三用</p>
+<ol>
+<li>减少查表：符号表中，标识符直接对应于符号表的索引</li>
+<li>减少转换：运算符中，类型直接就是运算符</li>
+<li>减少映射：生成代码的时候不用类型重新映射二进制代码了，类型就是二进制代码</li>
 </ol>
           
         </div>
 
         
           <div>
-            <a class="read-more button inline" href="/posts/compiler/chibicc/08.-%E5%88%86%E7%A6%BB%E6%96%87%E4%BB%B6/">[Read more]</a>
+            <a class="read-more button inline" href="/posts/compiler/tinycc/tcc1/">[Read more]</a>
           </div>
         
       </article>
@@ -428,17 +439,11 @@ primary    ::= &#34;(&#34; expr &#34;)&#34; | NUM
     <div class="pagination">
   <div class="pagination__buttons">
     
-      <a href="/" class="button inline prev">
+      <a href="/page/3/" class="button inline prev">
         &lt; [<span class="button__text">Newer posts</span>]
       </a>
     
     
-      ::
-    
-    
-      <a href="/page/3/" class="button inline next">
-        [<span class="button__text">Older posts</span>] &gt;
-      </a>
     
   </div>
 </div>

@@ -10,15 +10,57 @@
 		
 		
 		
-			<lastBuildDate>Sun, 31 May 2026 14:33:51 +0800</lastBuildDate>
+			<lastBuildDate>Sun, 31 May 2026 17:21:49 +0800</lastBuildDate>
 		
 			<atom:link href="https://rendcrx.github.io/posts/compiler/chibicc/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>17. while</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/17.-while/</link>
+				<pubDate>Sun, 31 May 2026 17:21:49 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/17.-while/</guid>
+				<description>&lt;h1 id=&#34;while&#34;&gt;while&lt;/h1&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;program       ::= stmt*&#xA;stmt          ::= &amp;#34;return&amp;#34; expr &amp;#34;;&amp;#34;&#xA;                | &amp;#34;if&amp;#34; &amp;#34;(&amp;#34; expr &amp;#34;)&amp;#34; stmt (&amp;#34;else&amp;#34; stmt)?&#xA;                | &amp;#34;for&amp;#34; &amp;#34;(&amp;#34; expr-stmt expr? &amp;#34;;&amp;#34; expr? &amp;#34;)&amp;#34; stmt&#xA;                | &amp;#34;while&amp;#34; &amp;#34;(&amp;#34; expr &amp;#34;)&amp;#34; stmt&#xA;                | &amp;#34;{&amp;#34; compound-stmt&#xA;                | expr-stmt&#xA;compound-stmt ::= stmt* &amp;#34;}&amp;#34;&#xA;expr-stmt     ::= expr? &amp;#34;;&amp;#34;&#xA;expr          ::= equality&#xA;equality      ::= relational (&amp;#34;==&amp;#34; relational | &amp;#34;!=&amp;#34; relational)*&#xA;relational    ::= add (&amp;#34;&amp;lt;&amp;#34; add | &amp;#34;&amp;lt;=&amp;#34; add | &amp;#34;&amp;gt;&amp;#34; add | &amp;#34;&amp;gt;=&amp;#34; add)*&#xA;add           ::= mul (&amp;#34;+&amp;#34; mul | &amp;#34;-&amp;#34; mul)*&#xA;mul           ::= unary (&amp;#34;\*&amp;#34; unary | &amp;#34;/&amp;#34; unary)*&#xA;unary         ::= (&amp;#34;+&amp;#34; | &amp;#34;-&amp;#34;) unary&#xA;                | primary&#xA;primary       ::= &amp;#34;(&amp;#34; expr &amp;#34;)&amp;#34; | NUM&#xA;&lt;/code&gt;&lt;/pre&gt;</description>
+			</item>
+			<item>
+				<title>16. for</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/16.-for/</link>
+				<pubDate>Sun, 31 May 2026 17:11:26 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/16.-for/</guid>
+				<description>&lt;h1 id=&#34;for&#34;&gt;for&lt;/h1&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;program       ::= stmt*&#xA;stmt          ::= &amp;#34;return&amp;#34; expr &amp;#34;;&amp;#34;&#xA;                | &amp;#34;if&amp;#34; &amp;#34;(&amp;#34; expr &amp;#34;)&amp;#34; stmt (&amp;#34;else&amp;#34; stmt)?&#xA;                | &amp;#34;for&amp;#34; &amp;#34;(&amp;#34; expr-stmt expr? &amp;#34;;&amp;#34; expr? &amp;#34;)&amp;#34; stmt&#xA;                | &amp;#34;{&amp;#34; compound-stmt&#xA;                | expr-stmt&#xA;compound-stmt ::= stmt* &amp;#34;}&amp;#34;&#xA;expr-stmt     ::= expr? &amp;#34;;&amp;#34;&#xA;expr          ::= equality&#xA;equality      ::= relational (&amp;#34;==&amp;#34; relational | &amp;#34;!=&amp;#34; relational)*&#xA;relational    ::= add (&amp;#34;&amp;lt;&amp;#34; add | &amp;#34;&amp;lt;=&amp;#34; add | &amp;#34;&amp;gt;&amp;#34; add | &amp;#34;&amp;gt;=&amp;#34; add)*&#xA;add           ::= mul (&amp;#34;+&amp;#34; mul | &amp;#34;-&amp;#34; mul)*&#xA;mul           ::= unary (&amp;#34;\*&amp;#34; unary | &amp;#34;/&amp;#34; unary)*&#xA;unary         ::= (&amp;#34;+&amp;#34; | &amp;#34;-&amp;#34;) unary&#xA;                | primary&#xA;primary       ::= &amp;#34;(&amp;#34; expr &amp;#34;)&amp;#34; | NUM&#xA;&lt;/code&gt;&lt;/pre&gt;</description>
+			</item>
+			<item>
+				<title>15. if</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/15.-if/</link>
+				<pubDate>Sun, 31 May 2026 16:58:16 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/15.-if/</guid>
+				<description>&lt;h1 id=&#34;if&#34;&gt;if&lt;/h1&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;program       ::= stmt*&#xA;stmt          ::= &amp;#34;return&amp;#34; expr &amp;#34;;&amp;#34;&#xA;                | &amp;#34;if&amp;#34; &amp;#34;(&amp;#34; expr &amp;#34;)&amp;#34; stmt (&amp;#34;else&amp;#34; stmt)?&#xA;                | &amp;#34;{&amp;#34; compound-stmt&#xA;                | expr-stmt&#xA;compound-stmt ::= stmt* &amp;#34;}&amp;#34;&#xA;expr-stmt     ::= expr? &amp;#34;;&amp;#34;&#xA;expr          ::= equality&#xA;equality      ::= relational (&amp;#34;==&amp;#34; relational | &amp;#34;!=&amp;#34; relational)*&#xA;relational    ::= add (&amp;#34;&amp;lt;&amp;#34; add | &amp;#34;&amp;lt;=&amp;#34; add | &amp;#34;&amp;gt;&amp;#34; add | &amp;#34;&amp;gt;=&amp;#34; add)*&#xA;add           ::= mul (&amp;#34;+&amp;#34; mul | &amp;#34;-&amp;#34; mul)*&#xA;mul           ::= unary (&amp;#34;\*&amp;#34; unary | &amp;#34;/&amp;#34; unary)*&#xA;unary         ::= (&amp;#34;+&amp;#34; | &amp;#34;-&amp;#34;) unary&#xA;                | primary&#xA;primary       ::= &amp;#34;(&amp;#34; expr &amp;#34;)&amp;#34; | NUM&#xA;&lt;/code&gt;&lt;/pre&gt;</description>
+			</item>
+			<item>
+				<title>14. 支持空表达式</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/14.-%E6%94%AF%E6%8C%81%E7%A9%BA%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+				<pubDate>Sun, 31 May 2026 16:56:07 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/14.-%E6%94%AF%E6%8C%81%E7%A9%BA%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+				<description>&lt;h1 id=&#34;空表达式&#34;&gt;空表达式&lt;/h1&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;expr-stmt ::= expr? &amp;#34;;&amp;#34;&#xA;&lt;/code&gt;&lt;/pre&gt;</description>
+			</item>
+			<item>
+				<title>13. 添加大括号支持</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/13.-%E6%B7%BB%E5%8A%A0%E5%A4%A7%E6%8B%AC%E5%8F%B7%E6%94%AF%E6%8C%81/</link>
+				<pubDate>Sun, 31 May 2026 16:46:18 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/13.-%E6%B7%BB%E5%8A%A0%E5%A4%A7%E6%8B%AC%E5%8F%B7%E6%94%AF%E6%8C%81/</guid>
+				<description>&lt;h1 id=&#34;大括号支持&#34;&gt;大括号支持&lt;/h1&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;program       ::= stmt*&#xA;stmt          ::= &amp;#34;return&amp;#34; expr &amp;#34;;&amp;#34;&#xA;                | &amp;#34;{&amp;#34; compound-stmt&#xA;                | expr-stmt&#xA;compound-stmt ::= stmt* &amp;#34;}&amp;#34;&#xA;expr-stmt     ::= expr &amp;#34;;&amp;#34;&#xA;expr          ::= equality&#xA;equality      ::= relational (&amp;#34;==&amp;#34; relational | &amp;#34;!=&amp;#34; relational)*&#xA;relational    ::= add (&amp;#34;&amp;lt;&amp;#34; add | &amp;#34;&amp;lt;=&amp;#34; add | &amp;#34;&amp;gt;&amp;#34; add | &amp;#34;&amp;gt;=&amp;#34; add)*&#xA;add           ::= mul (&amp;#34;+&amp;#34; mul | &amp;#34;-&amp;#34; mul)*&#xA;mul           ::= unary (&amp;#34;\*&amp;#34; unary | &amp;#34;/&amp;#34; unary)*&#xA;unary         ::= (&amp;#34;+&amp;#34; | &amp;#34;-&amp;#34;) unary&#xA;                | primary&#xA;primary       ::= &amp;#34;(&amp;#34; expr &amp;#34;)&amp;#34; | NUM&#xA;&lt;/code&gt;&lt;/pre&gt;</description>
+			</item>
+			<item>
+				<title>12. 添加 return 语句</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/12.-%E6%B7%BB%E5%8A%A0-return-%E8%AF%AD%E5%8F%A5/</link>
+				<pubDate>Sun, 31 May 2026 15:57:48 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/12.-%E6%B7%BB%E5%8A%A0-return-%E8%AF%AD%E5%8F%A5/</guid>
+				<description>&lt;h1 id=&#34;return-语句&#34;&gt;return 语句&lt;/h1&gt;&#xA;&lt;p&gt;这里添加了第一个关键字&lt;/p&gt;&#xA;&lt;p&gt;实现上应该用父子状态机&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;识别标识符的是父状态机&lt;/li&gt;&#xA;&lt;li&gt;然后再交给子状态机&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;如果功能是包含关系，分层的话可以更好的减少复杂度&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;program    ::= stmt*&#xA;stmt       ::= &amp;#34;return&amp;#34; expr &amp;#34;;&amp;#34;&#xA;             | expr-stmt&#xA;expr-stmt  ::= expr &amp;#34;;&amp;#34;&#xA;expr       ::= equality&#xA;equality   ::= relational (&amp;#34;==&amp;#34; relational | &amp;#34;!=&amp;#34; relational)*&#xA;relational ::= add (&amp;#34;&amp;lt;&amp;#34; add | &amp;#34;&amp;lt;=&amp;#34; add | &amp;#34;&amp;gt;&amp;#34; add | &amp;#34;&amp;gt;=&amp;#34; add)*&#xA;add        ::= mul (&amp;#34;+&amp;#34; mul | &amp;#34;-&amp;#34; mul)*&#xA;mul        ::= unary (&amp;#34;\*&amp;#34; unary | &amp;#34;/&amp;#34; unary)*&#xA;unary      ::= (&amp;#34;+&amp;#34; | &amp;#34;-&amp;#34;) unary&#xA;             | primary&#xA;primary    ::= &amp;#34;(&amp;#34; expr &amp;#34;)&amp;#34; | NUM&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;实现&#34;&gt;实现&lt;/h1&gt;&#xA;&lt;p&gt;在结尾放置一个标号&lt;/p&gt;</description>
+			</item>
 			<item>
 				<title>11. 支持多字母的局部变量</title>
 				<link>https://rendcrx.github.io/posts/compiler/chibicc/11.-%E6%94%AF%E6%8C%81%E5%A4%9A%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/</link>
 				<pubDate>Sun, 31 May 2026 14:33:51 +0800</pubDate>
 				<guid>https://rendcrx.github.io/posts/compiler/chibicc/11.-%E6%94%AF%E6%8C%81%E5%A4%9A%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/</guid>
-				<description>&lt;h1 id=&#34;支持多字母的局部变量&#34;&gt;支持多字母的局部变量&lt;/h1&gt;</description>
+				<description>&lt;h1 id=&#34;支持多字母的局部变量&#34;&gt;支持多字母的局部变量&lt;/h1&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;tokenize 识别标识符&lt;/li&gt;&#xA;&lt;li&gt;链表形式组织起 Obj，表示局部变量&lt;/li&gt;&#xA;&lt;li&gt;引入一个函数的对象，不仅包含了 stmt，还包含了局部变量映射&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h1 id=&#34;代码生成&#34;&gt;代码生成&lt;/h1&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;判断局部变量的个数，初始化合适的栈大小空间&lt;/li&gt;&#xA;&lt;li&gt;为局部变量依次分配映射位置&lt;/li&gt;&#xA;&lt;li&gt;代码生成&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
 			</item>
 			<item>
 				<title>10. 支持单个字母的局部变量</title>

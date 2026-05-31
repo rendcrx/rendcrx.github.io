@@ -2,16 +2,20 @@
 <html lang="en">
 <head>
   
-    <title>11. 支持多字母的局部变量 :: rendcrx</title>
+    <title>12. 添加 return 语句 :: rendcrx</title>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="支持多字母的局部变量 tokenize 识别标识符 链表形式组织起 Obj，表示局部变量 引入一个函数的对象，不仅包含了 stmt，还包含了局部变量映射 代码生成 判断局部变量的个数，初始化合适的栈大小空间 为局部变量依次分配映射位置 代码生成 " />
+<meta name="description" content="return 语句 这里添加了第一个关键字
+实现上应该用父子状态机
+识别标识符的是父状态机 然后再交给子状态机 如果功能是包含关系，分层的话可以更好的减少复杂度
+program ::= stmt* stmt ::= &#34;return&#34; expr &#34;;&#34; | expr-stmt expr-stmt ::= expr &#34;;&#34; expr ::= equality equality ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)* relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)* add ::= mul (&#34;&#43;&#34; mul | &#34;-&#34; mul)* mul ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)* unary ::= (&#34;&#43;&#34; | &#34;-&#34;) unary | primary primary ::= &#34;(&#34; expr &#34;)&#34; | NUM 实现 在结尾放置一个标号
+" />
 <meta name="keywords" content="" />
 
   <meta name="robots" content="noodp" />
 
-<link rel="canonical" href="https://rendcrx.github.io/posts/compiler/chibicc/11.-%E6%94%AF%E6%8C%81%E5%A4%9A%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/" />
+<link rel="canonical" href="https://rendcrx.github.io/posts/compiler/chibicc/12.-%E6%B7%BB%E5%8A%A0-return-%E8%AF%AD%E5%8F%A5/" />
 
 
 
@@ -77,9 +81,13 @@
 
 <meta property="og:locale" content="en" />
 <meta property="og:type" content="article" />
-<meta property="og:title" content="11. 支持多字母的局部变量">
-<meta property="og:description" content="支持多字母的局部变量 tokenize 识别标识符 链表形式组织起 Obj，表示局部变量 引入一个函数的对象，不仅包含了 stmt，还包含了局部变量映射 代码生成 判断局部变量的个数，初始化合适的栈大小空间 为局部变量依次分配映射位置 代码生成 " />
-<meta property="og:url" content="https://rendcrx.github.io/posts/compiler/chibicc/11.-%E6%94%AF%E6%8C%81%E5%A4%9A%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/" />
+<meta property="og:title" content="12. 添加 return 语句">
+<meta property="og:description" content="return 语句 这里添加了第一个关键字
+实现上应该用父子状态机
+识别标识符的是父状态机 然后再交给子状态机 如果功能是包含关系，分层的话可以更好的减少复杂度
+program ::= stmt* stmt ::= &#34;return&#34; expr &#34;;&#34; | expr-stmt expr-stmt ::= expr &#34;;&#34; expr ::= equality equality ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)* relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)* add ::= mul (&#34;&#43;&#34; mul | &#34;-&#34; mul)* mul ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)* unary ::= (&#34;&#43;&#34; | &#34;-&#34;) unary | primary primary ::= &#34;(&#34; expr &#34;)&#34; | NUM 实现 在结尾放置一个标号
+" />
+<meta property="og:url" content="https://rendcrx.github.io/posts/compiler/chibicc/12.-%E6%B7%BB%E5%8A%A0-return-%E8%AF%AD%E5%8F%A5/" />
 <meta property="og:site_name" content="rendcrx" />
 
   <meta property="og:image" content="https://rendcrx.github.io/og-image.png">
@@ -88,7 +96,7 @@
 <meta property="og:image:height" content="627">
 
 
-  <meta property="article:published_time" content="2026-05-31 14:33:51 &#43;0800 CST" />
+  <meta property="article:published_time" content="2026-05-31 15:57:48 &#43;0800 CST" />
 
 
 
@@ -165,8 +173,8 @@
     
 <article class="post">
   <h1 class="post-title">
-    <a href="https://rendcrx.github.io/posts/compiler/chibicc/11.-%E6%94%AF%E6%8C%81%E5%A4%9A%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/"><ol start="11">
-<li>支持多字母的局部变量</li>
+    <a href="https://rendcrx.github.io/posts/compiler/chibicc/12.-%E6%B7%BB%E5%8A%A0-return-%E8%AF%AD%E5%8F%A5/"><ol start="12">
+<li>添加 return 语句</li>
 </ol>
 </a>
   </h1>
@@ -185,18 +193,32 @@
   
 
   <div class="post-content"><div>
-        <h1 id="支持多字母的局部变量">支持多字母的局部变量<a href="#支持多字母的局部变量" class="hanchor" ariaLabel="Anchor">#</a> </h1>
-<ol>
-<li>tokenize 识别标识符</li>
-<li>链表形式组织起 Obj，表示局部变量</li>
-<li>引入一个函数的对象，不仅包含了 stmt，还包含了局部变量映射</li>
-</ol>
-<h1 id="代码生成">代码生成<a href="#代码生成" class="hanchor" ariaLabel="Anchor">#</a> </h1>
-<ol>
-<li>判断局部变量的个数，初始化合适的栈大小空间</li>
-<li>为局部变量依次分配映射位置</li>
-<li>代码生成</li>
-</ol>
+        <h1 id="return-语句">return 语句<a href="#return-语句" class="hanchor" ariaLabel="Anchor">#</a> </h1>
+<p>这里添加了第一个关键字</p>
+<p>实现上应该用父子状态机</p>
+<ul>
+<li>识别标识符的是父状态机</li>
+<li>然后再交给子状态机</li>
+</ul>
+<p>如果功能是包含关系，分层的话可以更好的减少复杂度</p>
+<pre tabindex="0"><code>program    ::= stmt*
+stmt       ::= &#34;return&#34; expr &#34;;&#34;
+             | expr-stmt
+expr-stmt  ::= expr &#34;;&#34;
+expr       ::= equality
+equality   ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
+relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
+add        ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
+mul        ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
+unary      ::= (&#34;+&#34; | &#34;-&#34;) unary
+             | primary
+primary    ::= &#34;(&#34; expr &#34;)&#34; | NUM
+</code></pre><h1 id="实现">实现<a href="#实现" class="hanchor" ariaLabel="Anchor">#</a> </h1>
+<p>在结尾放置一个标号</p>
+<p>任何时候需要 return 就跳过去</p>
+<ul>
+<li>因为还需要栈回收操作</li>
+</ul>
 
       </div></div>
 
@@ -209,16 +231,16 @@
   </div>
   <div class="pagination__buttons">
     
-      <a href="https://rendcrx.github.io/posts/compiler/chibicc/12.-%E6%B7%BB%E5%8A%A0-return-%E8%AF%AD%E5%8F%A5/" class="button inline prev">
-        &lt; [<span class="button__text">12. 添加 return 语句</span>]
+      <a href="https://rendcrx.github.io/posts/compiler/chibicc/13.-%E6%B7%BB%E5%8A%A0%E5%A4%A7%E6%8B%AC%E5%8F%B7%E6%94%AF%E6%8C%81/" class="button inline prev">
+        &lt; [<span class="button__text">13. 添加大括号支持</span>]
       </a>
     
     
       ::
     
     
-      <a href="https://rendcrx.github.io/posts/compiler/chibicc/10.-%E6%94%AF%E6%8C%81%E5%8D%95%E4%B8%AA%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/" class="button inline next">
-         [<span class="button__text">10. 支持单个字母的局部变量</span>] &gt;
+      <a href="https://rendcrx.github.io/posts/compiler/chibicc/11.-%E6%94%AF%E6%8C%81%E5%A4%9A%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/" class="button inline next">
+         [<span class="button__text">11. 支持多字母的局部变量</span>] &gt;
       </a>
     
   </div>

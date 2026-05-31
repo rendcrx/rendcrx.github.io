@@ -169,8 +169,8 @@
     
       <article class="post on-list">
         <h1 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/11.-%E6%94%AF%E6%8C%81%E5%A4%9A%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/"><ol start="11">
-<li>支持多字母的局部变量</li>
+          <a href="https://rendcrx.github.io/posts/compiler/chibicc/17.-while/"><ol start="17">
+<li>while</li>
 </ol>
 </a>
         </h1>
@@ -189,21 +189,39 @@
 
         <div class="post-content">
           
-            <h1 id="支持多字母的局部变量">支持多字母的局部变量</h1>
+            <h1 id="while">while</h1>
+<pre tabindex="0"><code>program       ::= stmt*
+stmt          ::= &#34;return&#34; expr &#34;;&#34;
+                | &#34;if&#34; &#34;(&#34; expr &#34;)&#34; stmt (&#34;else&#34; stmt)?
+                | &#34;for&#34; &#34;(&#34; expr-stmt expr? &#34;;&#34; expr? &#34;)&#34; stmt
+                | &#34;while&#34; &#34;(&#34; expr &#34;)&#34; stmt
+                | &#34;{&#34; compound-stmt
+                | expr-stmt
+compound-stmt ::= stmt* &#34;}&#34;
+expr-stmt     ::= expr? &#34;;&#34;
+expr          ::= equality
+equality      ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
+relational    ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
+add           ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
+mul           ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
+unary         ::= (&#34;+&#34; | &#34;-&#34;) unary
+                | primary
+primary       ::= &#34;(&#34; expr &#34;)&#34; | NUM
+</code></pre>
           
         </div>
 
         
           <div>
-            <a class="read-more button inline" href="/posts/compiler/chibicc/11.-%E6%94%AF%E6%8C%81%E5%A4%9A%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/">[Read more]</a>
+            <a class="read-more button inline" href="/posts/compiler/chibicc/17.-while/">[Read more]</a>
           </div>
         
       </article>
     
       <article class="post on-list">
         <h1 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/10.-%E6%94%AF%E6%8C%81%E5%8D%95%E4%B8%AA%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/"><ol start="10">
-<li>支持单个字母的局部变量</li>
+          <a href="https://rendcrx.github.io/posts/compiler/chibicc/16.-for/"><ol start="16">
+<li>for</li>
 </ol>
 </a>
         </h1>
@@ -222,40 +240,38 @@
 
         <div class="post-content">
           
-            <h1 id="支持单个字母的局部变量">支持单个字母的局部变量</h1>
-<p>变量：内存的一个别名</p>
-<ul>
-<li>环境中的一个映射</li>
-<li>变量本质就是一个映射</li>
-</ul>
-<pre tabindex="0"><code>program    ::= stmt*
-stmt       ::= expr-stmt
-expr-stmt  ::= expr &#34;;&#34;
-expr       ::= assign
-assign     ::= equality (&#34;=&#34; assign)?
-equality   ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
-relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
-add        ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
-mul        ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
-unary      ::= (&#34;+&#34; | &#34;-&#34;) unary
-             | primary
-primary    ::= &#34;(&#34; expr &#34;)&#34; | IDENT | NUM
-</code></pre><h1 id="实现">实现</h1>
-<p>这里先用了一个简单的方案：</p>
+            <h1 id="for">for</h1>
+<pre tabindex="0"><code>program       ::= stmt*
+stmt          ::= &#34;return&#34; expr &#34;;&#34;
+                | &#34;if&#34; &#34;(&#34; expr &#34;)&#34; stmt (&#34;else&#34; stmt)?
+                | &#34;for&#34; &#34;(&#34; expr-stmt expr? &#34;;&#34; expr? &#34;)&#34; stmt
+                | &#34;{&#34; compound-stmt
+                | expr-stmt
+compound-stmt ::= stmt* &#34;}&#34;
+expr-stmt     ::= expr? &#34;;&#34;
+expr          ::= equality
+equality      ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
+relational    ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
+add           ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
+mul           ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
+unary         ::= (&#34;+&#34; | &#34;-&#34;) unary
+                | primary
+primary       ::= &#34;(&#34; expr &#34;)&#34; | NUM
+</code></pre>
           
         </div>
 
         
           <div>
-            <a class="read-more button inline" href="/posts/compiler/chibicc/10.-%E6%94%AF%E6%8C%81%E5%8D%95%E4%B8%AA%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/">[Read more]</a>
+            <a class="read-more button inline" href="/posts/compiler/chibicc/16.-for/">[Read more]</a>
           </div>
         
       </article>
     
       <article class="post on-list">
         <h1 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/09.-%E6%8E%A5%E5%8F%97%E5%A4%9A%E4%B8%AA%E9%80%9A%E8%BF%87%E5%88%86%E5%8F%B7%E5%88%86%E5%89%B2%E7%9A%84%E8%AF%AD%E5%8F%A5/"><ol start="9">
-<li>接受多个通过分号分割的语句</li>
+          <a href="https://rendcrx.github.io/posts/compiler/chibicc/15.-if/"><ol start="15">
+<li>if</li>
 </ol>
 </a>
         </h1>
@@ -274,36 +290,37 @@ primary    ::= &#34;(&#34; expr &#34;)&#34; | IDENT | NUM
 
         <div class="post-content">
           
-            <h1 id="接受多个通过分号分割的语句">接受多个通过分号分割的语句</h1>
-<p>C 语言是通过一系列的语句组合的</p>
-<p>每个语句都进行代码生成</p>
-<p>之间同样通过接口关联</p>
-<pre tabindex="0"><code>program    ::= stmt*
-stmt       ::= expr-stmt
-expr-stmt  ::= expr &#34;;&#34;
-expr       ::= equality
-equality   ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
-relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
-add        ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
-mul        ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
-unary      ::= (&#34;+&#34; | &#34;-&#34;) unary
-             | primary
-primary    ::= &#34;(&#34; expr &#34;)&#34; | NUM
-</code></pre><p>代码生成还是基于 AST 的</p>
+            <h1 id="if">if</h1>
+<pre tabindex="0"><code>program       ::= stmt*
+stmt          ::= &#34;return&#34; expr &#34;;&#34;
+                | &#34;if&#34; &#34;(&#34; expr &#34;)&#34; stmt (&#34;else&#34; stmt)?
+                | &#34;{&#34; compound-stmt
+                | expr-stmt
+compound-stmt ::= stmt* &#34;}&#34;
+expr-stmt     ::= expr? &#34;;&#34;
+expr          ::= equality
+equality      ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
+relational    ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
+add           ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
+mul           ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
+unary         ::= (&#34;+&#34; | &#34;-&#34;) unary
+                | primary
+primary       ::= &#34;(&#34; expr &#34;)&#34; | NUM
+</code></pre>
           
         </div>
 
         
           <div>
-            <a class="read-more button inline" href="/posts/compiler/chibicc/09.-%E6%8E%A5%E5%8F%97%E5%A4%9A%E4%B8%AA%E9%80%9A%E8%BF%87%E5%88%86%E5%8F%B7%E5%88%86%E5%89%B2%E7%9A%84%E8%AF%AD%E5%8F%A5/">[Read more]</a>
+            <a class="read-more button inline" href="/posts/compiler/chibicc/15.-if/">[Read more]</a>
           </div>
         
       </article>
     
       <article class="post on-list">
         <h1 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/08.-%E5%88%86%E7%A6%BB%E6%96%87%E4%BB%B6/"><ol start="8">
-<li>分离文件</li>
+          <a href="https://rendcrx.github.io/posts/compiler/chibicc/14.-%E6%94%AF%E6%8C%81%E7%A9%BA%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><ol start="14">
+<li>支持空表达式</li>
 </ol>
 </a>
         </h1>
@@ -322,27 +339,23 @@ primary    ::= &#34;(&#34; expr &#34;)&#34; | NUM
 
         <div class="post-content">
           
-            <h1 id="分离文件">分离文件</h1>
-<p>模块化文件：</p>
-<ol>
-<li>tokenize</li>
-<li>parse</li>
-<li>codegen</li>
-</ol>
+            <h1 id="空表达式">空表达式</h1>
+<pre tabindex="0"><code>expr-stmt ::= expr? &#34;;&#34;
+</code></pre>
           
         </div>
 
         
           <div>
-            <a class="read-more button inline" href="/posts/compiler/chibicc/08.-%E5%88%86%E7%A6%BB%E6%96%87%E4%BB%B6/">[Read more]</a>
+            <a class="read-more button inline" href="/posts/compiler/chibicc/14.-%E6%94%AF%E6%8C%81%E7%A9%BA%E8%A1%A8%E8%BE%BE%E5%BC%8F/">[Read more]</a>
           </div>
         
       </article>
     
       <article class="post on-list">
         <h1 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/07.-%E6%B7%BB%E5%8A%A0%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6/"><ol start="7">
-<li>添加比较运算符</li>
+          <a href="https://rendcrx.github.io/posts/compiler/chibicc/13.-%E6%B7%BB%E5%8A%A0%E5%A4%A7%E6%8B%AC%E5%8F%B7%E6%94%AF%E6%8C%81/"><ol start="13">
+<li>添加大括号支持</li>
 </ol>
 </a>
         </h1>
@@ -361,28 +374,28 @@ primary    ::= &#34;(&#34; expr &#34;)&#34; | NUM
 
         <div class="post-content">
           
-            <h1 id="添加比较运算符">添加比较运算符</h1>
-<pre tabindex="0"><code>expr       ::= equality
-equality   ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
-relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
-add        ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
-mul        ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
-unary      ::= (&#34;+&#34; | &#34;-&#34;) unary
-             | primary
-primary    ::= &#34;(&#34; expr &#34;)&#34; | NUM
-</code></pre><ol>
-<li>写新的文法</li>
-<li>添加新的 node 节点</li>
-</ol>
-<p>注意运算符顺序</p>
-<h1 id="代码生成">代码生成</h1>
-<p>同样每个新节点，生成新的代码</p>
+            <h1 id="大括号支持">大括号支持</h1>
+<pre tabindex="0"><code>program       ::= stmt*
+stmt          ::= &#34;return&#34; expr &#34;;&#34;
+                | &#34;{&#34; compound-stmt
+                | expr-stmt
+compound-stmt ::= stmt* &#34;}&#34;
+expr-stmt     ::= expr &#34;;&#34;
+expr          ::= equality
+equality      ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
+relational    ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
+add           ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
+mul           ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
+unary         ::= (&#34;+&#34; | &#34;-&#34;) unary
+                | primary
+primary       ::= &#34;(&#34; expr &#34;)&#34; | NUM
+</code></pre>
           
         </div>
 
         
           <div>
-            <a class="read-more button inline" href="/posts/compiler/chibicc/07.-%E6%B7%BB%E5%8A%A0%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6/">[Read more]</a>
+            <a class="read-more button inline" href="/posts/compiler/chibicc/13.-%E6%B7%BB%E5%8A%A0%E5%A4%A7%E6%8B%AC%E5%8F%B7%E6%94%AF%E6%8C%81/">[Read more]</a>
           </div>
         
       </article>
