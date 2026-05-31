@@ -2,21 +2,18 @@
 <html lang="en">
 <head>
   
-    <title>允许空白字符 :: rendcrx</title>
+    <title>支持单个字母的局部变量 :: rendcrx</title>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="允许空白字符 我们需要忽略空白字符
-现在开始，添加 token 了
-类别 如果类别集合中有多个内容，还需要提供具体内容 目前有两个类型：
-数字 标点符号 技术选型 这里使用了 multipass 的方式
-通过一个 tokenize 函数，来完整扫描字符串，生成 token 链表
-用链表来管理 token " />
+<meta name="description" content="支持单个字母的局部变量 变量：内存的一个别名
+环境中的一个映射 变量本质就是一个映射 program ::= stmt* stmt ::= expr-stmt expr-stmt ::= expr &#34;;&#34; expr ::= assign assign ::= equality (&#34;=&#34; assign)? equality ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)* relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)* add ::= mul (&#34;&#43;&#34; mul | &#34;-&#34; mul)* mul ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)* unary ::= (&#34;&#43;&#34; | &#34;-&#34;) unary | primary primary ::= &#34;(&#34; expr &#34;)&#34; | IDENT | NUM 实现 这里先用了一个简单的方案：
+" />
 <meta name="keywords" content="" />
 
   <meta name="robots" content="noodp" />
 
-<link rel="canonical" href="https://rendcrx.github.io/posts/compiler/chibicc/3/" />
+<link rel="canonical" href="https://rendcrx.github.io/posts/compiler/chibicc/10/" />
 
 
 
@@ -82,14 +79,11 @@
 
 <meta property="og:locale" content="en" />
 <meta property="og:type" content="article" />
-<meta property="og:title" content="允许空白字符">
-<meta property="og:description" content="允许空白字符 我们需要忽略空白字符
-现在开始，添加 token 了
-类别 如果类别集合中有多个内容，还需要提供具体内容 目前有两个类型：
-数字 标点符号 技术选型 这里使用了 multipass 的方式
-通过一个 tokenize 函数，来完整扫描字符串，生成 token 链表
-用链表来管理 token " />
-<meta property="og:url" content="https://rendcrx.github.io/posts/compiler/chibicc/3/" />
+<meta property="og:title" content="支持单个字母的局部变量">
+<meta property="og:description" content="支持单个字母的局部变量 变量：内存的一个别名
+环境中的一个映射 变量本质就是一个映射 program ::= stmt* stmt ::= expr-stmt expr-stmt ::= expr &#34;;&#34; expr ::= assign assign ::= equality (&#34;=&#34; assign)? equality ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)* relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)* add ::= mul (&#34;&#43;&#34; mul | &#34;-&#34; mul)* mul ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)* unary ::= (&#34;&#43;&#34; | &#34;-&#34;) unary | primary primary ::= &#34;(&#34; expr &#34;)&#34; | IDENT | NUM 实现 这里先用了一个简单的方案：
+" />
+<meta property="og:url" content="https://rendcrx.github.io/posts/compiler/chibicc/10/" />
 <meta property="og:site_name" content="rendcrx" />
 
   <meta property="og:image" content="https://rendcrx.github.io/og-image.png">
@@ -98,7 +92,7 @@
 <meta property="og:image:height" content="627">
 
 
-  <meta property="article:published_time" content="2026-05-31 08:11:22 &#43;0800 CST" />
+  <meta property="article:published_time" content="2026-05-31 14:16:13 &#43;0800 CST" />
 
 
 
@@ -175,7 +169,7 @@
     
 <article class="post">
   <h1 class="post-title">
-    <a href="https://rendcrx.github.io/posts/compiler/chibicc/3/">允许空白字符</a>
+    <a href="https://rendcrx.github.io/posts/compiler/chibicc/10/">支持单个字母的局部变量</a>
   </h1>
   <div class="post-meta"><time class="post-date">2026-05-31</time></div>
 
@@ -192,23 +186,32 @@
   
 
   <div class="post-content"><div>
-        <h1 id="允许空白字符">允许空白字符<a href="#允许空白字符" class="hanchor" ariaLabel="Anchor">#</a> </h1>
-<p>我们需要忽略空白字符</p>
-<p>现在开始，添加 token 了</p>
-<ol>
-<li>类别</li>
-<li>如果类别集合中有多个内容，还需要提供具体内容</li>
-</ol>
-<p>目前有两个类型：</p>
-<ol>
-<li>数字</li>
-<li>标点符号</li>
-</ol>
-<h1 id="技术选型">技术选型<a href="#技术选型" class="hanchor" ariaLabel="Anchor">#</a> </h1>
-<p>这里使用了 multipass 的方式</p>
-<p>通过一个 tokenize 函数，来完整扫描字符串，生成 token 链表</p>
+        <h1 id="支持单个字母的局部变量">支持单个字母的局部变量<a href="#支持单个字母的局部变量" class="hanchor" ariaLabel="Anchor">#</a> </h1>
+<p>变量：内存的一个别名</p>
 <ul>
-<li>用链表来管理 token</li>
+<li>环境中的一个映射</li>
+<li>变量本质就是一个映射</li>
+</ul>
+<pre tabindex="0"><code>program    ::= stmt*
+stmt       ::= expr-stmt
+expr-stmt  ::= expr &#34;;&#34;
+expr       ::= assign
+assign     ::= equality (&#34;=&#34; assign)?
+equality   ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
+relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
+add        ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
+mul        ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
+unary      ::= (&#34;+&#34; | &#34;-&#34;) unary
+             | primary
+primary    ::= &#34;(&#34; expr &#34;)&#34; | IDENT | NUM
+</code></pre><h1 id="实现">实现<a href="#实现" class="hanchor" ariaLabel="Anchor">#</a> </h1>
+<p>这里先用了一个简单的方案：</p>
+<ol>
+<li>变量的映射是固定位置的，栈内 8 字节，根据变量名字</li>
+<li>如果是解释器，映射就在解释器代码中。但是编译器，就要完整反应到二进制代码上。</li>
+</ol>
+<ul>
+<li>因此，这里的映射就是变量名和内存地址之间的映射</li>
 </ul>
 
       </div></div>
@@ -222,16 +225,16 @@
   </div>
   <div class="pagination__buttons">
     
-      <a href="https://rendcrx.github.io/posts/compiler/chibicc/4/" class="button inline prev">
-        &lt; [<span class="button__text">改善错误信息</span>]
+      <a href="https://rendcrx.github.io/posts/compiler/chibicc/11/" class="button inline prev">
+        &lt; [<span class="button__text">支持多字母的局部变量</span>]
       </a>
     
     
       ::
     
     
-      <a href="https://rendcrx.github.io/posts/compiler/chibicc/1/" class="button inline next">
-         [<span class="button__text">最小的 C 编译器</span>] &gt;
+      <a href="https://rendcrx.github.io/posts/compiler/chibicc/9/" class="button inline next">
+         [<span class="button__text">接受多个通过分号分割的语句</span>] &gt;
       </a>
     
   </div>

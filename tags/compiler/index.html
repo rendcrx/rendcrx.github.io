@@ -118,8 +118,45 @@
 
     </div>
     
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/posts/compiler/tinycc/">tinycc</a></li>
+        
+      
+        
+          <li><a href="/posts/compiler/chibicc/">chibicc</a></li>
+        
+      
+      
+    </ul>
+  </li>
+</ul>
+
+    
     
   </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/posts/compiler/tinycc/" >tinycc</a></li>
+        
+      
+        
+          <li><a href="/posts/compiler/chibicc/" >chibicc</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
   
 </header>
 
@@ -132,7 +169,131 @@
     
       <article class="post on-list">
         <h1 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/8/">chibicc</a>
+          <a href="https://rendcrx.github.io/posts/compiler/chibicc/11/">支持多字母的局部变量</a>
+        </h1>
+        <div class="post-meta"><time class="post-date">2026-05-31</time></div>
+
+        
+          <span class="post-tags">
+            
+            #<a href="https://rendcrx.github.io/tags/compiler/">compiler</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+
+        <div class="post-content">
+          
+            <h1 id="支持多字母的局部变量">支持多字母的局部变量</h1>
+          
+        </div>
+
+        
+          <div>
+            <a class="read-more button inline" href="/posts/compiler/chibicc/11/">[Read more]</a>
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title">
+          <a href="https://rendcrx.github.io/posts/compiler/chibicc/10/">支持单个字母的局部变量</a>
+        </h1>
+        <div class="post-meta"><time class="post-date">2026-05-31</time></div>
+
+        
+          <span class="post-tags">
+            
+            #<a href="https://rendcrx.github.io/tags/compiler/">compiler</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+
+        <div class="post-content">
+          
+            <h1 id="支持单个字母的局部变量">支持单个字母的局部变量</h1>
+<p>变量：内存的一个别名</p>
+<ul>
+<li>环境中的一个映射</li>
+<li>变量本质就是一个映射</li>
+</ul>
+<pre tabindex="0"><code>program    ::= stmt*
+stmt       ::= expr-stmt
+expr-stmt  ::= expr &#34;;&#34;
+expr       ::= assign
+assign     ::= equality (&#34;=&#34; assign)?
+equality   ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
+relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
+add        ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
+mul        ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
+unary      ::= (&#34;+&#34; | &#34;-&#34;) unary
+             | primary
+primary    ::= &#34;(&#34; expr &#34;)&#34; | IDENT | NUM
+</code></pre><h1 id="实现">实现</h1>
+<p>这里先用了一个简单的方案：</p>
+          
+        </div>
+
+        
+          <div>
+            <a class="read-more button inline" href="/posts/compiler/chibicc/10/">[Read more]</a>
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title">
+          <a href="https://rendcrx.github.io/posts/compiler/chibicc/9/">接受多个通过分号分割的语句</a>
+        </h1>
+        <div class="post-meta"><time class="post-date">2026-05-31</time></div>
+
+        
+          <span class="post-tags">
+            
+            #<a href="https://rendcrx.github.io/tags/compiler/">compiler</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+
+        <div class="post-content">
+          
+            <h1 id="接受多个通过分号分割的语句">接受多个通过分号分割的语句</h1>
+<p>C 语言是通过一系列的语句组合的</p>
+<p>每个语句都进行代码生成</p>
+<p>之间同样通过接口关联</p>
+<pre tabindex="0"><code>program    ::= stmt*
+stmt       ::= expr-stmt
+expr-stmt  ::= expr &#34;;&#34;
+expr       ::= equality
+equality   ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
+relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
+add        ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
+mul        ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
+unary      ::= (&#34;+&#34; | &#34;-&#34;) unary
+             | primary
+primary    ::= &#34;(&#34; expr &#34;)&#34; | NUM
+</code></pre><p>代码生成还是基于 AST 的</p>
+          
+        </div>
+
+        
+          <div>
+            <a class="read-more button inline" href="/posts/compiler/chibicc/9/">[Read more]</a>
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title">
+          <a href="https://rendcrx.github.io/posts/compiler/chibicc/8/">分离文件</a>
         </h1>
         <div class="post-meta"><time class="post-date">2026-05-31</time></div>
 
@@ -168,7 +329,7 @@
     
       <article class="post on-list">
         <h1 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/7/">chibicc</a>
+          <a href="https://rendcrx.github.io/posts/compiler/chibicc/7/">添加比较运算符</a>
         </h1>
         <div class="post-meta"><time class="post-date">2026-05-31</time></div>
 
@@ -186,15 +347,15 @@
         <div class="post-content">
           
             <h1 id="添加比较运算符">添加比较运算符</h1>
-<p>expr       ::= equality
-equality   ::= relational (&quot;==&quot; relational | &ldquo;!=&rdquo; relational)*
-relational ::= add (&quot;&lt;&quot; add | &ldquo;&lt;=&rdquo; add | &ldquo;&gt;&rdquo; add | &ldquo;&gt;=&rdquo; add)*
-add        ::= mul (&quot;+&quot; mul | &ldquo;-&rdquo; mul)*
-mul        ::= unary (&quot;*&quot; unary | &ldquo;/&rdquo; unary)*
-unary      ::= (&quot;+&quot; | &ldquo;-&rdquo;) unary
-| primary
-primary    ::= &ldquo;(&rdquo; expr &ldquo;)&rdquo; | NUM</p>
-<ol>
+<pre tabindex="0"><code>expr       ::= equality
+equality   ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
+relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
+add        ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
+mul        ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
+unary      ::= (&#34;+&#34; | &#34;-&#34;) unary
+             | primary
+primary    ::= &#34;(&#34; expr &#34;)&#34; | NUM
+</code></pre><ol>
 <li>写新的文法</li>
 <li>添加新的 node 节点</li>
 </ol>
@@ -207,123 +368,6 @@ primary    ::= &ldquo;(&rdquo; expr &ldquo;)&rdquo; | NUM</p>
         
           <div>
             <a class="read-more button inline" href="/posts/compiler/chibicc/7/">[Read more]</a>
-          </div>
-        
-      </article>
-    
-      <article class="post on-list">
-        <h1 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/6/">chibicc</a>
-        </h1>
-        <div class="post-meta"><time class="post-date">2026-05-31</time></div>
-
-        
-          <span class="post-tags">
-            
-            #<a href="https://rendcrx.github.io/tags/compiler/">compiler</a>&nbsp;
-            
-          </span>
-        
-
-        
-
-
-        <div class="post-content">
-          
-            <h1 id="添加一元的加法和减法">添加一元的加法和减法</h1>
-<p>expr    ::= mul (&quot;+&quot; mul | &ldquo;-&rdquo; mul)*
-mul     ::= unary (&quot;*&quot; unary | &ldquo;/&rdquo; unary)*
-unary   ::= (&quot;+&quot; | &ldquo;-&rdquo;) unary
-| primary
-primary ::= &ldquo;(&rdquo; expr &ldquo;)&rdquo; | NUM</p>
-<h1 id="代码生成">代码生成</h1>
-<p>注意：多添加了节点类型</p>
-<p>每一个节点类型都需要有一个代码生成</p>
-<ul>
-<li><code>neg</code> 取反</li>
-</ul>
-          
-        </div>
-
-        
-          <div>
-            <a class="read-more button inline" href="/posts/compiler/chibicc/6/">[Read more]</a>
-          </div>
-        
-      </article>
-    
-      <article class="post on-list">
-        <h1 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/5/">chibicc</a>
-        </h1>
-        <div class="post-meta"><time class="post-date">2026-05-31</time></div>
-
-        
-          <span class="post-tags">
-            
-            #<a href="https://rendcrx.github.io/tags/compiler/">compiler</a>&nbsp;
-            
-          </span>
-        
-
-        
-
-
-        <div class="post-content">
-          
-            <h1 id="支持---运算符">支持 * / 运算符</h1>
-<p>关键：和 + 和 - 比起来，有更高的优先级</p>
-<p>expr    ::= mul (&quot;+&quot; mul | &ldquo;-&rdquo; mul)*
-mul     ::= primary (&quot;*&quot; primaty | &ldquo;/&rdquo; primary)*
-primary ::= &ldquo;(&rdquo; expr &ldquo;)&rdquo; | NUM</p>
-<h1 id="代码生成">代码生成</h1>
-<p>我们为每一个节点都生成代码</p>
-<p>接口就是 rax，每个节点都是一个表达式，结果放在 rax 中</p>
-<p>使用栈结构来存储中间结果</p>
-<ul>
-<li><code>imul</code>: integer mul, 有符号整数乘法</li>
-<li><code>idiv</code>: 有符号除法，默认的被除数和结果都是在 rdx:rax 当中</li>
-<li><code>cqo</code>: convert quadword to octaword, rax 扩展到 rdx:rax 的寄存器中</li>
-</ul>
-          
-        </div>
-
-        
-          <div>
-            <a class="read-more button inline" href="/posts/compiler/chibicc/5/">[Read more]</a>
-          </div>
-        
-      </article>
-    
-      <article class="post on-list">
-        <h1 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/4/">chibicc</a>
-        </h1>
-        <div class="post-meta"><time class="post-date">2026-05-31</time></div>
-
-        
-          <span class="post-tags">
-            
-            #<a href="https://rendcrx.github.io/tags/compiler/">compiler</a>&nbsp;
-            
-          </span>
-        
-
-        
-
-
-        <div class="post-content">
-          
-            <h1 id="改善错误信息">改善错误信息</h1>
-<p>这里只处理词法分析的错误</p>
-<p>记录当时的错误位置</p>
-<p>在下面打印出错误信息</p>
-          
-        </div>
-
-        
-          <div>
-            <a class="read-more button inline" href="/posts/compiler/chibicc/4/">[Read more]</a>
           </div>
         
       </article>

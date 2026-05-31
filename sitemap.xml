@@ -4,18 +4,30 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://rendcrx.github.io/</loc>
-    <lastmod>2026-05-31T10:45:04+08:00</lastmod>
+    <lastmod>2026-05-31T14:33:51+08:00</lastmod>
   </url><url>
-    <loc>https://rendcrx.github.io/posts/compiler/chibicc/8/</loc>
-    <lastmod>2026-05-31T10:45:04+08:00</lastmod>
+    <loc>https://rendcrx.github.io/posts/compiler/chibicc/</loc>
+    <lastmod>2026-05-31T14:33:51+08:00</lastmod>
   </url><url>
     <loc>https://rendcrx.github.io/tags/compiler/</loc>
-    <lastmod>2026-05-31T10:45:04+08:00</lastmod>
+    <lastmod>2026-05-31T14:33:51+08:00</lastmod>
   </url><url>
     <loc>https://rendcrx.github.io/posts/</loc>
-    <lastmod>2026-05-31T10:45:04+08:00</lastmod>
+    <lastmod>2026-05-31T14:33:51+08:00</lastmod>
   </url><url>
     <loc>https://rendcrx.github.io/tags/</loc>
+    <lastmod>2026-05-31T14:33:51+08:00</lastmod>
+  </url><url>
+    <loc>https://rendcrx.github.io/posts/compiler/chibicc/11/</loc>
+    <lastmod>2026-05-31T14:33:51+08:00</lastmod>
+  </url><url>
+    <loc>https://rendcrx.github.io/posts/compiler/chibicc/10/</loc>
+    <lastmod>2026-05-31T14:16:13+08:00</lastmod>
+  </url><url>
+    <loc>https://rendcrx.github.io/posts/compiler/chibicc/9/</loc>
+    <lastmod>2026-05-31T13:58:02+08:00</lastmod>
+  </url><url>
+    <loc>https://rendcrx.github.io/posts/compiler/chibicc/8/</loc>
     <lastmod>2026-05-31T10:45:04+08:00</lastmod>
   </url><url>
     <loc>https://rendcrx.github.io/posts/compiler/chibicc/7/</loc>
@@ -40,6 +52,9 @@
     <lastmod>2026-05-31T07:47:35+08:00</lastmod>
   </url><url>
     <loc>https://rendcrx.github.io/posts/compiler/tinycc/tcc2/</loc>
+    <lastmod>2026-05-19T17:46:41+08:00</lastmod>
+  </url><url>
+    <loc>https://rendcrx.github.io/posts/compiler/tinycc/</loc>
     <lastmod>2026-05-19T17:46:41+08:00</lastmod>
   </url><url>
     <loc>https://rendcrx.github.io/posts/compiler/tinycc/tcc1/</loc>

@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
   
-    <title>chibicc :: rendcrx</title>
+    <title>添加比较运算符 :: rendcrx</title>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="添加比较运算符 expr ::= equality equality ::= relational (&quot;==&quot; relational | &ldquo;!=&rdquo; relational)* relational ::= add (&quot;&lt;&quot; add | &ldquo;&lt;=&rdquo; add | &ldquo;&gt;&rdquo; add | &ldquo;&gt;=&rdquo; add)* add ::= mul (&quot;&#43;&quot; mul | &ldquo;-&rdquo; mul)* mul ::= unary (&quot;*&quot; unary | &ldquo;/&rdquo; unary)* unary ::= (&quot;&#43;&quot; | &ldquo;-&rdquo;) unary | primary primary ::= &ldquo;(&rdquo; expr &ldquo;)&rdquo; | NUM
-写新的文法 添加新的 node 节点 注意运算符顺序
+<meta name="description" content="添加比较运算符 expr ::= equality equality ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)* relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)* add ::= mul (&#34;&#43;&#34; mul | &#34;-&#34; mul)* mul ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)* unary ::= (&#34;&#43;&#34; | &#34;-&#34;) unary | primary primary ::= &#34;(&#34; expr &#34;)&#34; | NUM 写新的文法 添加新的 node 节点 注意运算符顺序
 代码生成 同样每个新节点，生成新的代码
 " />
 <meta name="keywords" content="" />
@@ -80,9 +79,8 @@
 
 <meta property="og:locale" content="en" />
 <meta property="og:type" content="article" />
-<meta property="og:title" content="chibicc">
-<meta property="og:description" content="添加比较运算符 expr ::= equality equality ::= relational (&quot;==&quot; relational | &ldquo;!=&rdquo; relational)* relational ::= add (&quot;&lt;&quot; add | &ldquo;&lt;=&rdquo; add | &ldquo;&gt;&rdquo; add | &ldquo;&gt;=&rdquo; add)* add ::= mul (&quot;&#43;&quot; mul | &ldquo;-&rdquo; mul)* mul ::= unary (&quot;*&quot; unary | &ldquo;/&rdquo; unary)* unary ::= (&quot;&#43;&quot; | &ldquo;-&rdquo;) unary | primary primary ::= &ldquo;(&rdquo; expr &ldquo;)&rdquo; | NUM
-写新的文法 添加新的 node 节点 注意运算符顺序
+<meta property="og:title" content="添加比较运算符">
+<meta property="og:description" content="添加比较运算符 expr ::= equality equality ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)* relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)* add ::= mul (&#34;&#43;&#34; mul | &#34;-&#34; mul)* mul ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)* unary ::= (&#34;&#43;&#34; | &#34;-&#34;) unary | primary primary ::= &#34;(&#34; expr &#34;)&#34; | NUM 写新的文法 添加新的 node 节点 注意运算符顺序
 代码生成 同样每个新节点，生成新的代码
 " />
 <meta property="og:url" content="https://rendcrx.github.io/posts/compiler/chibicc/7/" />
@@ -124,8 +122,45 @@
 
     </div>
     
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/posts/compiler/tinycc/">tinycc</a></li>
+        
+      
+        
+          <li><a href="/posts/compiler/chibicc/">chibicc</a></li>
+        
+      
+      
+    </ul>
+  </li>
+</ul>
+
+    
     
   </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/posts/compiler/tinycc/" >tinycc</a></li>
+        
+      
+        
+          <li><a href="/posts/compiler/chibicc/" >chibicc</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
   
 </header>
 
@@ -134,7 +169,7 @@
     
 <article class="post">
   <h1 class="post-title">
-    <a href="https://rendcrx.github.io/posts/compiler/chibicc/7/">chibicc</a>
+    <a href="https://rendcrx.github.io/posts/compiler/chibicc/7/">添加比较运算符</a>
   </h1>
   <div class="post-meta"><time class="post-date">2026-05-31</time></div>
 
@@ -152,15 +187,15 @@
 
   <div class="post-content"><div>
         <h1 id="添加比较运算符">添加比较运算符<a href="#添加比较运算符" class="hanchor" ariaLabel="Anchor">#</a> </h1>
-<p>expr       ::= equality
-equality   ::= relational (&quot;==&quot; relational | &ldquo;!=&rdquo; relational)*
-relational ::= add (&quot;&lt;&quot; add | &ldquo;&lt;=&rdquo; add | &ldquo;&gt;&rdquo; add | &ldquo;&gt;=&rdquo; add)*
-add        ::= mul (&quot;+&quot; mul | &ldquo;-&rdquo; mul)*
-mul        ::= unary (&quot;*&quot; unary | &ldquo;/&rdquo; unary)*
-unary      ::= (&quot;+&quot; | &ldquo;-&rdquo;) unary
-| primary
-primary    ::= &ldquo;(&rdquo; expr &ldquo;)&rdquo; | NUM</p>
-<ol>
+<pre tabindex="0"><code>expr       ::= equality
+equality   ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
+relational ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
+add        ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
+mul        ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
+unary      ::= (&#34;+&#34; | &#34;-&#34;) unary
+             | primary
+primary    ::= &#34;(&#34; expr &#34;)&#34; | NUM
+</code></pre><ol>
 <li>写新的文法</li>
 <li>添加新的 node 节点</li>
 </ol>
@@ -180,7 +215,7 @@ primary    ::= &ldquo;(&rdquo; expr &ldquo;)&rdquo; | NUM</p>
   <div class="pagination__buttons">
     
       <a href="https://rendcrx.github.io/posts/compiler/chibicc/8/" class="button inline prev">
-        &lt; [<span class="button__text">chibicc</span>]
+        &lt; [<span class="button__text">分离文件</span>]
       </a>
     
     
@@ -188,7 +223,7 @@ primary    ::= &ldquo;(&rdquo; expr &ldquo;)&rdquo; | NUM</p>
     
     
       <a href="https://rendcrx.github.io/posts/compiler/chibicc/6/" class="button inline next">
-         [<span class="button__text">chibicc</span>] &gt;
+         [<span class="button__text">添加一元的加法和减法</span>] &gt;
       </a>
     
   </div>

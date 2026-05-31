@@ -7,8 +7,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="支持 * / 运算符 关键：和 &#43; 和 - 比起来，有更高的优先级
-expr ::= mul (&quot;&#43;&quot; mul | &ldquo;-&rdquo; mul)* mul ::= primary (&quot;*&quot; primaty | &ldquo;/&rdquo; primary)* primary ::= &ldquo;(&rdquo; expr &ldquo;)&rdquo; | NUM
-代码生成 我们为每一个节点都生成代码
+expr ::= mul (&#34;&#43;&#34; mul | &#34;-&#34; mul)* mul ::= primary (&#34;\*&#34; primaty | &#34;/&#34; primary)* primary ::= &#34;(&#34; expr &#34;)&#34; | NUM 代码生成 我们为每一个节点都生成代码
 接口就是 rax，每个节点都是一个表达式，结果放在 rax 中
 使用栈结构来存储中间结果
 imul: integer mul, 有符号整数乘法 idiv: 有符号除法，默认的被除数和结果都是在 rdx:rax 当中 cqo: convert quadword to octaword, rax 扩展到 rdx:rax 的寄存器中 " />
@@ -84,8 +83,7 @@ imul: integer mul, 有符号整数乘法 idiv: 有符号除法，默认的被除
 <meta property="og:type" content="article" />
 <meta property="og:title" content="chibicc">
 <meta property="og:description" content="支持 * / 运算符 关键：和 &#43; 和 - 比起来，有更高的优先级
-expr ::= mul (&quot;&#43;&quot; mul | &ldquo;-&rdquo; mul)* mul ::= primary (&quot;*&quot; primaty | &ldquo;/&rdquo; primary)* primary ::= &ldquo;(&rdquo; expr &ldquo;)&rdquo; | NUM
-代码生成 我们为每一个节点都生成代码
+expr ::= mul (&#34;&#43;&#34; mul | &#34;-&#34; mul)* mul ::= primary (&#34;\*&#34; primaty | &#34;/&#34; primary)* primary ::= &#34;(&#34; expr &#34;)&#34; | NUM 代码生成 我们为每一个节点都生成代码
 接口就是 rax，每个节点都是一个表达式，结果放在 rax 中
 使用栈结构来存储中间结果
 imul: integer mul, 有符号整数乘法 idiv: 有符号除法，默认的被除数和结果都是在 rdx:rax 当中 cqo: convert quadword to octaword, rax 扩展到 rdx:rax 的寄存器中 " />
@@ -128,8 +126,45 @@ imul: integer mul, 有符号整数乘法 idiv: 有符号除法，默认的被除
 
     </div>
     
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/posts/compiler/tinycc/">tinycc</a></li>
+        
+      
+        
+          <li><a href="/posts/compiler/chibicc/">chibicc</a></li>
+        
+      
+      
+    </ul>
+  </li>
+</ul>
+
+    
     
   </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/posts/compiler/tinycc/" >tinycc</a></li>
+        
+      
+        
+          <li><a href="/posts/compiler/chibicc/" >chibicc</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
   
 </header>
 
@@ -157,10 +192,10 @@ imul: integer mul, 有符号整数乘法 idiv: 有符号除法，默认的被除
   <div class="post-content"><div>
         <h1 id="支持---运算符">支持 * / 运算符<a href="#支持---运算符" class="hanchor" ariaLabel="Anchor">#</a> </h1>
 <p>关键：和 + 和 - 比起来，有更高的优先级</p>
-<p>expr    ::= mul (&quot;+&quot; mul | &ldquo;-&rdquo; mul)*
-mul     ::= primary (&quot;*&quot; primaty | &ldquo;/&rdquo; primary)*
-primary ::= &ldquo;(&rdquo; expr &ldquo;)&rdquo; | NUM</p>
-<h1 id="代码生成">代码生成<a href="#代码生成" class="hanchor" ariaLabel="Anchor">#</a> </h1>
+<pre tabindex="0"><code>expr    ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
+mul     ::= primary (&#34;\*&#34; primaty | &#34;/&#34; primary)*
+primary ::= &#34;(&#34; expr &#34;)&#34; | NUM
+</code></pre><h1 id="代码生成">代码生成<a href="#代码生成" class="hanchor" ariaLabel="Anchor">#</a> </h1>
 <p>我们为每一个节点都生成代码</p>
 <p>接口就是 rax，每个节点都是一个表达式，结果放在 rax 中</p>
 <p>使用栈结构来存储中间结果</p>
@@ -182,7 +217,7 @@ primary ::= &ldquo;(&rdquo; expr &ldquo;)&rdquo; | NUM</p>
   <div class="pagination__buttons">
     
       <a href="https://rendcrx.github.io/posts/compiler/chibicc/6/" class="button inline prev">
-        &lt; [<span class="button__text">chibicc</span>]
+        &lt; [<span class="button__text">添加一元的加法和减法</span>]
       </a>
     
     
@@ -190,7 +225,7 @@ primary ::= &ldquo;(&rdquo; expr &ldquo;)&rdquo; | NUM</p>
     
     
       <a href="https://rendcrx.github.io/posts/compiler/chibicc/4/" class="button inline next">
-         [<span class="button__text">chibicc</span>] &gt;
+         [<span class="button__text">改善错误信息</span>] &gt;
       </a>
     
   </div>

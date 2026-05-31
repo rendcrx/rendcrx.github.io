@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<title>rendcrx</title>
-		<link>https://rendcrx.github.io/</link>
-		<description>Recent content on rendcrx</description>
+		<title>chibicc on rendcrx</title>
+		<link>https://rendcrx.github.io/posts/compiler/chibicc/</link>
+		<description>Recent content in chibicc on rendcrx</description>
 		<generator>Hugo</generator>
 		<language>en-us</language>
 		
@@ -12,7 +12,7 @@
 		
 			<lastBuildDate>Sun, 31 May 2026 14:33:51 +0800</lastBuildDate>
 		
-			<atom:link href="https://rendcrx.github.io/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="https://rendcrx.github.io/posts/compiler/chibicc/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>支持多字母的局部变量</title>
 				<link>https://rendcrx.github.io/posts/compiler/chibicc/11/</link>
@@ -89,20 +89,6 @@
 				<pubDate>Sun, 31 May 2026 07:47:35 +0800</pubDate>
 				<guid>https://rendcrx.github.io/posts/compiler/chibicc/2/</guid>
 				<description>&lt;h1 id=&#34;添加--和---运算符&#34;&gt;添加 + 和 - 运算符&lt;/h1&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;expr    ::= NUMBER subexpr?&#xA;subexpr ::= + expr&#xA;          | - expr&#xA;&lt;/code&gt;&lt;/pre&gt;</description>
-			</item>
-			<item>
-				<title>tinycc</title>
-				<link>https://rendcrx.github.io/posts/compiler/tinycc/tcc2/</link>
-				<pubDate>Tue, 19 May 2026 17:46:41 +0800</pubDate>
-				<guid>https://rendcrx.github.io/posts/compiler/tinycc/tcc2/</guid>
-				<description>&lt;h1 id=&#34;tcc-的词法分析二&#34;&gt;tcc 的词法分析(二)&lt;/h1&gt;&#xA;&lt;p&gt;宏只处理 define&lt;/p&gt;&#xA;&lt;p&gt;做法是如果遇到宏，就跳转过去读，作为最新的 token 然后返回&lt;/p&gt;&#xA;&lt;h2 id=&#34;结构&#34;&gt;结构&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;符号表&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;char *idtable&lt;/code&gt; 是一个字符数组，存储着每一个符号。符号之间用 &amp;lsquo;\0&amp;rsquo; 分割&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;char *idptr, *idlast&lt;/code&gt; 辅助指针&#xA;&lt;ul&gt;&#xA;&lt;li&gt;idptr 指向字符数组第一个空位置&lt;/li&gt;&#xA;&lt;li&gt;idlast 指向符号表中最后的一个符号(插入新符号的时候，重置该指针)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;tinycc 在处理文本的时候，除了运算符和数字，都视为符号&lt;/p&gt;&#xA;&lt;p&gt;返回的时候 token 表明了符号位于符号表的位置（第几个符号）&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;从 256 开始记的&lt;/li&gt;&#xA;&lt;li&gt;前面的属于关键字&lt;/li&gt;&#xA;&lt;li&gt;因为字符直接使用数值作为类型，因此根据 ascii 从 256 开始是符号(包括关键字)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;步骤：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;只要第一个判断属于符号，进入符号的状态机，逐个字符插入符号表&lt;/li&gt;&#xA;&lt;li&gt;比较判断是否为关键字，如果是的话，保持 idptr 不变，同时更新 tok&lt;/li&gt;&#xA;&lt;li&gt;如果不是关键字的话，更新 idptr&lt;/li&gt;&#xA;&lt;li&gt;判断该符号是否位于宏替换的范围，如果是的话，不要立即返回&lt;/li&gt;&#xA;&lt;li&gt;记录当前输入流读取位置，到宏栈中（维护了一个栈）&lt;/li&gt;&#xA;&lt;li&gt;设置输入流的位置到宏替换的位置&lt;/li&gt;&#xA;&lt;li&gt;重新调用 next() 来读取替换的符号&lt;/li&gt;&#xA;&lt;li&gt;直到行尾，替换结束，根据宏栈的地址，跳转回来（允许嵌套宏）&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;&lt;strong&gt;宏&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;步骤：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;如果当前符号是 #, 进入分支&lt;/li&gt;&#xA;&lt;li&gt;取下一个符号，如果下一个符号就是 define 关键字（固定 token 类型）&lt;/li&gt;&#xA;&lt;li&gt;读取下一个符号到符号表中，同时更新 vat 和 vac, 在该符号位置记录了符号类型和数值&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;对于 define 的符号类型就是 VT_DEFINE, 数值就是文件流的位置，就是现在&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;ol start=&#34;4&#34;&gt;&#xA;&lt;li&gt;一直跳过字符不再读取了，这部分是宏替换的内容。直到读取完换行符为止&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;宏替换时：&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>tinycc</title>
-				<link>https://rendcrx.github.io/posts/compiler/tinycc/tcc1/</link>
-				<pubDate>Tue, 28 Apr 2026 17:51:41 +0800</pubDate>
-				<guid>https://rendcrx.github.io/posts/compiler/tinycc/tcc1/</guid>
-				<description>&lt;blockquote&gt;&#xA;&lt;p&gt;tcc&amp;rsquo;s first commit&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;h1 id=&#34;tcc-的词法分析一&#34;&gt;tcc 的词法分析(一)&lt;/h1&gt;&#xA;&lt;p&gt;一个语言的词法分析，三个状态图就可以了：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;标识符&lt;/li&gt;&#xA;&lt;li&gt;常量&lt;/li&gt;&#xA;&lt;li&gt;符号&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;tinycc 的常量甚至不做处理，只进行了标识符和符号的识别&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;可能是在词法分析的地方再处理&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;空白&#34;&gt;空白&lt;/h2&gt;&#xA;&lt;p&gt;利用一个死循环，持续探测到非空白时才退出&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;while(1) {&#xA;    c = inp();&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;每次进入的时候，需要取一次字符&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;} else if (c != &amp;#39; &amp;#39; &amp;amp; c != 9)&#xA;  break;&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;退出条件&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;标识符&#34;&gt;标识符&lt;/h2&gt;&#xA;&lt;p&gt;关键字区分：利用了常见的做法&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;提前将关键字放入到符号表中&lt;/li&gt;&#xA;&lt;li&gt;使用一个状态图来进行判断&lt;/li&gt;&#xA;&lt;li&gt;如果是标识符，再判断符号表中是否已经存在该符号了&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;巧妙的地方：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;标识符的 TOKEN 类型标识不是乱取的&lt;/li&gt;&#xA;&lt;li&gt;而是符号表中，该符号对应的位置索引&lt;/li&gt;&#xA;&lt;li&gt;通过该标识符的 TOKEN 数值，既可以判断类型，也可以获取地址&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;符号&#34;&gt;符号&lt;/h2&gt;&#xA;&lt;p&gt;对于单符号和双符号，利用 &lt;code&gt;ungetc&lt;/code&gt; 来纠错&lt;/p&gt;&#xA;&lt;p&gt;巧妙的地方：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;对于大部分的单符号，直接用符号值表示类型（同样可以获取到值）&lt;/li&gt;&#xA;&lt;li&gt;对于双符号和 &lt;code&gt;&amp;lt;&lt;/code&gt;, &lt;code&gt;&amp;gt;&lt;/code&gt; 直接用二进制码表示类型，方便代码生成？&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;加速&#34;&gt;加速&lt;/h1&gt;&#xA;&lt;p&gt;对于用到数值的地方，尽量做到一值两用，甚至三用&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;减少查表：符号表中，标识符直接对应于符号表的索引&lt;/li&gt;&#xA;&lt;li&gt;减少转换：运算符中，类型直接就是运算符&lt;/li&gt;&#xA;&lt;li&gt;减少映射：生成代码的时候不用类型重新映射二进制代码了，类型就是二进制代码&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
 			</item>
 	</channel>
 </rss>
