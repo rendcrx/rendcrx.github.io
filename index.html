@@ -184,6 +184,59 @@
     
       <article class="post on-list">
         <h2 class="post-title">
+          <a href="https://rendcrx.github.io/posts/compiler/chibicc/18.-%E6%8C%87%E9%92%88/"><ol start="18">
+<li>指针</li>
+</ol>
+</a>
+        </h2>
+
+        <div class="post-meta"><time class="post-date">2026-05-31</time></div>
+
+        
+          <span class="post-tags">
+            
+            #<a href="https://rendcrx.github.io/tags/compiler/">compiler</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+
+        <div class="post-content">
+          
+            <h1 id="指针">指针</h1>
+<pre tabindex="0"><code>unary = (&#34;+&#34; + &#34;-&#34; | &#34;*&#34; | &#34;&amp;&#34;) unary
+</code></pre><ul>
+<li>因为本来操作变量，这里都是操作的地址</li>
+<li>原先是通过地址解引用操作的</li>
+<li>这里直接保持原样即可</li>
+</ul>
+<pre tabindex="0"><code>case ND_VAR:
+    gen_addr(node); // rax is variable&#39;s address
+    printf(&#34;\tmovq (%%rax), %%rax\n&#34;);
+    return;
+</code></pre><ul>
+<li>变量在获取后，会通过解引用</li>
+<li>&amp; 直接不用解引用即可</li>
+<li>
+<ul>
+<li>在生成表达式后，再次解引用即可</li>
+</ul>
+</li>
+</ul>
+          
+        </div>
+
+        
+          <div>
+            <a class="read-more button inline" href="/posts/compiler/chibicc/18.-%E6%8C%87%E9%92%88/">[Read more]</a>
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h2 class="post-title">
           <a href="https://rendcrx.github.io/posts/compiler/chibicc/17.-while/"><ol start="17">
 <li>while</li>
 </ol>
@@ -367,55 +420,6 @@ primary       ::= &#34;(&#34; expr &#34;)&#34; | NUM
         
           <div>
             <a class="read-more button inline" href="/posts/compiler/chibicc/14.-%E6%94%AF%E6%8C%81%E7%A9%BA%E8%A1%A8%E8%BE%BE%E5%BC%8F/">[Read more]</a>
-          </div>
-        
-      </article>
-    
-      <article class="post on-list">
-        <h2 class="post-title">
-          <a href="https://rendcrx.github.io/posts/compiler/chibicc/13.-%E6%B7%BB%E5%8A%A0%E5%A4%A7%E6%8B%AC%E5%8F%B7%E6%94%AF%E6%8C%81/"><ol start="13">
-<li>添加大括号支持</li>
-</ol>
-</a>
-        </h2>
-
-        <div class="post-meta"><time class="post-date">2026-05-31</time></div>
-
-        
-          <span class="post-tags">
-            
-            #<a href="https://rendcrx.github.io/tags/compiler/">compiler</a>&nbsp;
-            
-          </span>
-        
-
-        
-
-
-        <div class="post-content">
-          
-            <h1 id="大括号支持">大括号支持</h1>
-<pre tabindex="0"><code>program       ::= stmt*
-stmt          ::= &#34;return&#34; expr &#34;;&#34;
-                | &#34;{&#34; compound-stmt
-                | expr-stmt
-compound-stmt ::= stmt* &#34;}&#34;
-expr-stmt     ::= expr &#34;;&#34;
-expr          ::= equality
-equality      ::= relational (&#34;==&#34; relational | &#34;!=&#34; relational)*
-relational    ::= add (&#34;&lt;&#34; add | &#34;&lt;=&#34; add | &#34;&gt;&#34; add | &#34;&gt;=&#34; add)*
-add           ::= mul (&#34;+&#34; mul | &#34;-&#34; mul)*
-mul           ::= unary (&#34;\*&#34; unary | &#34;/&#34; unary)*
-unary         ::= (&#34;+&#34; | &#34;-&#34;) unary
-                | primary
-primary       ::= &#34;(&#34; expr &#34;)&#34; | NUM
-</code></pre>
-          
-        </div>
-
-        
-          <div>
-            <a class="read-more button inline" href="/posts/compiler/chibicc/13.-%E6%B7%BB%E5%8A%A0%E5%A4%A7%E6%8B%AC%E5%8F%B7%E6%94%AF%E6%8C%81/">[Read more]</a>
           </div>
         
       </article>

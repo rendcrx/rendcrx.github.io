@@ -10,9 +10,16 @@
 		
 		
 		
-			<lastBuildDate>Sun, 31 May 2026 17:21:49 +0800</lastBuildDate>
+			<lastBuildDate>Sun, 31 May 2026 20:11:02 +0800</lastBuildDate>
 		
 			<atom:link href="https://rendcrx.github.io/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>18. 指针</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/18.-%E6%8C%87%E9%92%88/</link>
+				<pubDate>Sun, 31 May 2026 20:11:02 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/18.-%E6%8C%87%E9%92%88/</guid>
+				<description>&lt;h1 id=&#34;指针&#34;&gt;指针&lt;/h1&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;unary = (&amp;#34;+&amp;#34; + &amp;#34;-&amp;#34; | &amp;#34;*&amp;#34; | &amp;#34;&amp;amp;&amp;#34;) unary&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;因为本来操作变量，这里都是操作的地址&lt;/li&gt;&#xA;&lt;li&gt;原先是通过地址解引用操作的&lt;/li&gt;&#xA;&lt;li&gt;这里直接保持原样即可&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;case ND_VAR:&#xA;    gen_addr(node); // rax is variable&amp;#39;s address&#xA;    printf(&amp;#34;\tmovq (%%rax), %%rax\n&amp;#34;);&#xA;    return;&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;变量在获取后，会通过解引用&lt;/li&gt;&#xA;&lt;li&gt;&amp;amp; 直接不用解引用即可&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;在生成表达式后，再次解引用即可&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
 			<item>
 				<title>17. while</title>
 				<link>https://rendcrx.github.io/posts/compiler/chibicc/17.-while/</link>

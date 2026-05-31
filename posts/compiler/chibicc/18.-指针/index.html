@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
   
-    <title>Tags :: rendcrx</title>
+    <title>18. 指针 :: rendcrx</title>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="" />
+<meta name="description" content="指针 unary = (&#34;&#43;&#34; &#43; &#34;-&#34; | &#34;*&#34; | &#34;&amp;&#34;) unary 因为本来操作变量，这里都是操作的地址 原先是通过地址解引用操作的 这里直接保持原样即可 case ND_VAR: gen_addr(node); // rax is variable&#39;s address printf(&#34;\tmovq (%%rax), %%rax\n&#34;); return; 变量在获取后，会通过解引用 &amp; 直接不用解引用即可 在生成表达式后，再次解引用即可 " />
 <meta name="keywords" content="" />
 
   <meta name="robots" content="noodp" />
 
-<link rel="canonical" href="https://rendcrx.github.io/tags/" />
+<link rel="canonical" href="https://rendcrx.github.io/posts/compiler/chibicc/18.-%E6%8C%87%E9%92%88/" />
 
 
 
@@ -76,10 +76,10 @@
 
 
 <meta property="og:locale" content="en" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Tags">
-<meta property="og:description" content="" />
-<meta property="og:url" content="https://rendcrx.github.io/tags/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="18. 指针">
+<meta property="og:description" content="指针 unary = (&#34;&#43;&#34; &#43; &#34;-&#34; | &#34;*&#34; | &#34;&amp;&#34;) unary 因为本来操作变量，这里都是操作的地址 原先是通过地址解引用操作的 这里直接保持原样即可 case ND_VAR: gen_addr(node); // rax is variable&#39;s address printf(&#34;\tmovq (%%rax), %%rax\n&#34;); return; 变量在获取后，会通过解引用 &amp; 直接不用解引用即可 在生成表达式后，再次解引用即可 " />
+<meta property="og:url" content="https://rendcrx.github.io/posts/compiler/chibicc/18.-%E6%8C%87%E9%92%88/" />
 <meta property="og:site_name" content="rendcrx" />
 
   <meta property="og:image" content="https://rendcrx.github.io/og-image.png">
@@ -88,10 +88,10 @@
 <meta property="og:image:height" content="627">
 
 
+  <meta property="article:published_time" content="2026-05-31 20:11:02 &#43;0800 CST" />
 
 
 
-  <link href="/tags/index.xml" rel="alternate" type="application/rss+xml" title="rendcrx" />
 
 
 
@@ -163,22 +163,77 @@
 
   <div class="content">
     
-  <div class="terms">
-    <h1>Tags</h1>
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://rendcrx.github.io/posts/compiler/chibicc/18.-%E6%8C%87%E9%92%88/"><ol start="18">
+<li>指针</li>
+</ol>
+</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2026-05-31</time></div>
+
+  
+    <span class="post-tags">
+      
+      #<a href="https://rendcrx.github.io/tags/compiler/">compiler</a>&nbsp;
+      
+    </span>
+  
+  
+
+
+  
+
+  <div class="post-content"><div>
+        <h1 id="指针">指针<a href="#指针" class="hanchor" ariaLabel="Anchor">#</a> </h1>
+<pre tabindex="0"><code>unary = (&#34;+&#34; + &#34;-&#34; | &#34;*&#34; | &#34;&amp;&#34;) unary
+</code></pre><ul>
+<li>因为本来操作变量，这里都是操作的地址</li>
+<li>原先是通过地址解引用操作的</li>
+<li>这里直接保持原样即可</li>
+</ul>
+<pre tabindex="0"><code>case ND_VAR:
+    gen_addr(node); // rax is variable&#39;s address
+    printf(&#34;\tmovq (%%rax), %%rax\n&#34;);
+    return;
+</code></pre><ul>
+<li>变量在获取后，会通过解引用</li>
+<li>&amp; 直接不用解引用即可</li>
+<li>
+<ul>
+<li>在生成表达式后，再次解引用即可</li>
+</ul>
+</li>
+</ul>
+
+      </div></div>
+
+  
     
-    <ul>
-      
-      
-        
-        
-        
-          <li>
-            <a class="terms-title" href="https://rendcrx.github.io/tags/compiler/">compiler [20]</a>
-          </li>
-        
-      
-    </ul>
+<div class="pagination">
+  <div class="pagination__title">
+    <span class="pagination__title-h">Read other posts</span>
+    <hr />
   </div>
+  <div class="pagination__buttons">
+    
+    
+    
+      <a href="https://rendcrx.github.io/posts/compiler/chibicc/17.-while/" class="button inline next">
+         [<span class="button__text">17. while</span>] &gt;
+      </a>
+    
+  </div>
+</div>
+
+
+  
+
+  
+    
+
+  
+</article>
 
   </div>
 
