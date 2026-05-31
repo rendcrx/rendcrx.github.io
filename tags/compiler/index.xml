@@ -1,26 +1,87 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Compiler on rendcrx&#39;s blog</title>
-    <link>https://rendcrx.github.io/tags/compiler/</link>
-    <description>Recent content in Compiler on rendcrx&#39;s blog</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 19 May 2026 17:46:41 +0800</lastBuildDate>
-    <atom:link href="https://rendcrx.github.io/tags/compiler/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>tinycc</title>
-      <link>https://rendcrx.github.io/posts/compiler/tcc2/</link>
-      <pubDate>Tue, 19 May 2026 17:46:41 +0800</pubDate>
-      <guid>https://rendcrx.github.io/posts/compiler/tcc2/</guid>
-      <description>&lt;h1 id=&#34;tcc-的词法分析二&#34;&gt;tcc 的词法分析(二)&lt;/h1&gt;&#xA;&lt;p&gt;宏只处理 define&lt;/p&gt;&#xA;&lt;p&gt;做法是如果遇到宏，就跳转过去读，作为最新的 token 然后返回&lt;/p&gt;&#xA;&lt;h2 id=&#34;结构&#34;&gt;结构&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;符号表&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;char *idtable&lt;/code&gt; 是一个字符数组，存储着每一个符号。符号之间用 &amp;lsquo;\0&amp;rsquo; 分割&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;char *idptr, *idlast&lt;/code&gt; 辅助指针&#xA;&lt;ul&gt;&#xA;&lt;li&gt;idptr 指向字符数组第一个空位置&lt;/li&gt;&#xA;&lt;li&gt;idlast 指向符号表中最后的一个符号(插入新符号的时候，重置该指针)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;tinycc 在处理文本的时候，除了运算符和数字，都视为符号&lt;/p&gt;&#xA;&lt;p&gt;返回的时候 token 表明了符号位于符号表的位置（第几个符号）&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;从 256 开始记的&lt;/li&gt;&#xA;&lt;li&gt;前面的属于关键字&lt;/li&gt;&#xA;&lt;li&gt;因为字符直接使用数值作为类型，因此根据 ascii 从 256 开始是符号(包括关键字)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;步骤：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;只要第一个判断属于符号，进入符号的状态机，逐个字符插入符号表&lt;/li&gt;&#xA;&lt;li&gt;比较判断是否为关键字，如果是的话，保持 idptr 不变，同时更新 tok&lt;/li&gt;&#xA;&lt;li&gt;如果不是关键字的话，更新 idptr&lt;/li&gt;&#xA;&lt;li&gt;判断该符号是否位于宏替换的范围，如果是的话，不要立即返回&lt;/li&gt;&#xA;&lt;li&gt;记录当前输入流读取位置，到宏栈中（维护了一个栈）&lt;/li&gt;&#xA;&lt;li&gt;设置输入流的位置到宏替换的位置&lt;/li&gt;&#xA;&lt;li&gt;重新调用 next() 来读取替换的符号&lt;/li&gt;&#xA;&lt;li&gt;直到行尾，替换结束，根据宏栈的地址，跳转回来（允许嵌套宏）&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;&lt;strong&gt;宏&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;步骤：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;如果当前符号是 #, 进入分支&lt;/li&gt;&#xA;&lt;li&gt;取下一个符号，如果下一个符号就是 define 关键字（固定 token 类型）&lt;/li&gt;&#xA;&lt;li&gt;读取下一个符号到符号表中，同时更新 vat 和 vac, 在该符号位置记录了符号类型和数值&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;对于 define 的符号类型就是 VT_DEFINE, 数值就是文件流的位置，就是现在&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;ol start=&#34;4&#34;&gt;&#xA;&lt;li&gt;一直跳过字符不再读取了，这部分是宏替换的内容。直到读取完换行符为止&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;宏替换时：&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>tinycc</title>
-      <link>https://rendcrx.github.io/posts/compiler/tcc1/</link>
-      <pubDate>Tue, 28 Apr 2026 17:51:41 +0800</pubDate>
-      <guid>https://rendcrx.github.io/posts/compiler/tcc1/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;tcc&amp;rsquo;s first commit&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;h1 id=&#34;tcc-的词法分析一&#34;&gt;tcc 的词法分析(一)&lt;/h1&gt;&#xA;&lt;p&gt;一个语言的词法分析，三个状态图就可以了：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;标识符&lt;/li&gt;&#xA;&lt;li&gt;常量&lt;/li&gt;&#xA;&lt;li&gt;符号&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;tinycc 的常量甚至不做处理，只进行了标识符和符号的识别&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;可能是在词法分析的地方再处理&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;空白&#34;&gt;空白&lt;/h2&gt;&#xA;&lt;p&gt;利用一个死循环，持续探测到非空白时才退出&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;while(1) {&#xA;    c = inp();&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;每次进入的时候，需要取一次字符&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;} else if (c != &amp;#39; &amp;#39; &amp;amp; c != 9)&#xA;  break;&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;退出条件&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;标识符&#34;&gt;标识符&lt;/h2&gt;&#xA;&lt;p&gt;关键字区分：利用了常见的做法&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;提前将关键字放入到符号表中&lt;/li&gt;&#xA;&lt;li&gt;使用一个状态图来进行判断&lt;/li&gt;&#xA;&lt;li&gt;如果是标识符，再判断符号表中是否已经存在该符号了&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;巧妙的地方：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;标识符的 TOKEN 类型标识不是乱取的&lt;/li&gt;&#xA;&lt;li&gt;而是符号表中，该符号对应的位置索引&lt;/li&gt;&#xA;&lt;li&gt;通过该标识符的 TOKEN 数值，既可以判断类型，也可以获取地址&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;符号&#34;&gt;符号&lt;/h2&gt;&#xA;&lt;p&gt;对于单符号和双符号，利用 &lt;code&gt;ungetc&lt;/code&gt; 来纠错&lt;/p&gt;&#xA;&lt;p&gt;巧妙的地方：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;对于大部分的单符号，直接用符号值表示类型（同样可以获取到值）&lt;/li&gt;&#xA;&lt;li&gt;对于双符号和 &lt;code&gt;&amp;lt;&lt;/code&gt;, &lt;code&gt;&amp;gt;&lt;/code&gt; 直接用二进制码表示类型，方便代码生成？&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;加速&#34;&gt;加速&lt;/h1&gt;&#xA;&lt;p&gt;对于用到数值的地方，尽量做到一值两用，甚至三用&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;减少查表：符号表中，标识符直接对应于符号表的索引&lt;/li&gt;&#xA;&lt;li&gt;减少转换：运算符中，类型直接就是运算符&lt;/li&gt;&#xA;&lt;li&gt;减少映射：生成代码的时候不用类型重新映射二进制代码了，类型就是二进制代码&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
-    </item>
-  </channel>
+	<channel>
+		<title>Compiler on rendcrx</title>
+		<link>https://rendcrx.github.io/tags/compiler/</link>
+		<description>Recent content in Compiler on rendcrx</description>
+		<generator>Hugo</generator>
+		<language>en-us</language>
+		
+		
+		
+		
+			<lastBuildDate>Sun, 31 May 2026 10:45:04 +0800</lastBuildDate>
+		
+			<atom:link href="https://rendcrx.github.io/tags/compiler/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>chibicc</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/8/</link>
+				<pubDate>Sun, 31 May 2026 10:45:04 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/8/</guid>
+				<description>&lt;h1 id=&#34;分离文件&#34;&gt;分离文件&lt;/h1&gt;&#xA;&lt;p&gt;模块化文件：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;tokenize&lt;/li&gt;&#xA;&lt;li&gt;parse&lt;/li&gt;&#xA;&lt;li&gt;codegen&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
+			</item>
+			<item>
+				<title>chibicc</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/7/</link>
+				<pubDate>Sun, 31 May 2026 10:09:25 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/7/</guid>
+				<description>&lt;h1 id=&#34;添加比较运算符&#34;&gt;添加比较运算符&lt;/h1&gt;&#xA;&lt;p&gt;expr       ::= equality&#xA;equality   ::= relational (&amp;quot;==&amp;quot; relational | &amp;ldquo;!=&amp;rdquo; relational)*&#xA;relational ::= add (&amp;quot;&amp;lt;&amp;quot; add | &amp;ldquo;&amp;lt;=&amp;rdquo; add | &amp;ldquo;&amp;gt;&amp;rdquo; add | &amp;ldquo;&amp;gt;=&amp;rdquo; add)*&#xA;add        ::= mul (&amp;quot;+&amp;quot; mul | &amp;ldquo;-&amp;rdquo; mul)*&#xA;mul        ::= unary (&amp;quot;*&amp;quot; unary | &amp;ldquo;/&amp;rdquo; unary)*&#xA;unary      ::= (&amp;quot;+&amp;quot; | &amp;ldquo;-&amp;rdquo;) unary&#xA;| primary&#xA;primary    ::= &amp;ldquo;(&amp;rdquo; expr &amp;ldquo;)&amp;rdquo; | NUM&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;写新的文法&lt;/li&gt;&#xA;&lt;li&gt;添加新的 node 节点&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;注意运算符顺序&lt;/p&gt;&#xA;&lt;h1 id=&#34;代码生成&#34;&gt;代码生成&lt;/h1&gt;&#xA;&lt;p&gt;同样每个新节点，生成新的代码&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>chibicc</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/6/</link>
+				<pubDate>Sun, 31 May 2026 09:52:40 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/6/</guid>
+				<description>&lt;h1 id=&#34;添加一元的加法和减法&#34;&gt;添加一元的加法和减法&lt;/h1&gt;&#xA;&lt;p&gt;expr    ::= mul (&amp;quot;+&amp;quot; mul | &amp;ldquo;-&amp;rdquo; mul)*&#xA;mul     ::= unary (&amp;quot;*&amp;quot; unary | &amp;ldquo;/&amp;rdquo; unary)*&#xA;unary   ::= (&amp;quot;+&amp;quot; | &amp;ldquo;-&amp;rdquo;) unary&#xA;| primary&#xA;primary ::= &amp;ldquo;(&amp;rdquo; expr &amp;ldquo;)&amp;rdquo; | NUM&lt;/p&gt;&#xA;&lt;h1 id=&#34;代码生成&#34;&gt;代码生成&lt;/h1&gt;&#xA;&lt;p&gt;注意：多添加了节点类型&lt;/p&gt;&#xA;&lt;p&gt;每一个节点类型都需要有一个代码生成&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;neg&lt;/code&gt; 取反&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+			<item>
+				<title>chibicc</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/5/</link>
+				<pubDate>Sun, 31 May 2026 09:13:19 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/5/</guid>
+				<description>&lt;h1 id=&#34;支持---运算符&#34;&gt;支持 * / 运算符&lt;/h1&gt;&#xA;&lt;p&gt;关键：和 + 和 - 比起来，有更高的优先级&lt;/p&gt;&#xA;&lt;p&gt;expr    ::= mul (&amp;quot;+&amp;quot; mul | &amp;ldquo;-&amp;rdquo; mul)*&#xA;mul     ::= primary (&amp;quot;*&amp;quot; primaty | &amp;ldquo;/&amp;rdquo; primary)*&#xA;primary ::= &amp;ldquo;(&amp;rdquo; expr &amp;ldquo;)&amp;rdquo; | NUM&lt;/p&gt;&#xA;&lt;h1 id=&#34;代码生成&#34;&gt;代码生成&lt;/h1&gt;&#xA;&lt;p&gt;我们为每一个节点都生成代码&lt;/p&gt;&#xA;&lt;p&gt;接口就是 rax，每个节点都是一个表达式，结果放在 rax 中&lt;/p&gt;&#xA;&lt;p&gt;使用栈结构来存储中间结果&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;imul&lt;/code&gt;: integer mul, 有符号整数乘法&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;idiv&lt;/code&gt;: 有符号除法，默认的被除数和结果都是在 rdx:rax 当中&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;cqo&lt;/code&gt;: convert quadword to octaword, rax 扩展到 rdx:rax 的寄存器中&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+			<item>
+				<title>chibicc</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/4/</link>
+				<pubDate>Sun, 31 May 2026 08:40:09 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/4/</guid>
+				<description>&lt;h1 id=&#34;改善错误信息&#34;&gt;改善错误信息&lt;/h1&gt;&#xA;&lt;p&gt;这里只处理词法分析的错误&lt;/p&gt;&#xA;&lt;p&gt;记录当时的错误位置&lt;/p&gt;&#xA;&lt;p&gt;在下面打印出错误信息&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>chibicc</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/3/</link>
+				<pubDate>Sun, 31 May 2026 08:11:22 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/3/</guid>
+				<description>&lt;h1 id=&#34;允许空白字符&#34;&gt;允许空白字符&lt;/h1&gt;&#xA;&lt;p&gt;我们需要忽略空白字符&lt;/p&gt;&#xA;&lt;p&gt;现在开始，添加 token 了&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;类别&lt;/li&gt;&#xA;&lt;li&gt;如果类别集合中有多个内容，还需要提供具体内容&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;目前有两个类型：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;数字&lt;/li&gt;&#xA;&lt;li&gt;标点符号&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h1 id=&#34;技术选型&#34;&gt;技术选型&lt;/h1&gt;&#xA;&lt;p&gt;这里使用了 multipass 的方式&lt;/p&gt;&#xA;&lt;p&gt;通过一个 tokenize 函数，来完整扫描字符串，生成 token 链表&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;用链表来管理 token&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+			<item>
+				<title>chibicc</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/1/</link>
+				<pubDate>Sun, 31 May 2026 07:47:35 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/1/</guid>
+				<description>&lt;h1 id=&#34;最小的-c-编译器&#34;&gt;最小的 C 编译器&lt;/h1&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;命令行参数接受一个字符串输入作为参数&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;要求是数字&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;ol start=&#34;2&#34;&gt;&#xA;&lt;li&gt;这个编译器把这个数字作为返回值来返回&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h1 id=&#34;如何做&#34;&gt;如何做&lt;/h1&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;C 编译器要求我们必须有一个 main 函数&lt;/li&gt;&#xA;&lt;li&gt;C 编译器要求函数的返回值只有一个，用 eax 作为返回值&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;所以我们只需要先创建 main 函数：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;.globl main&#xA;main:&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后把返回值传递给 eax：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;movl $0, %eax&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;函数要求返回：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ret&#xA;&lt;/code&gt;&lt;/pre&gt;</description>
+			</item>
+			<item>
+				<title>chibicc</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/2/</link>
+				<pubDate>Sun, 31 May 2026 07:47:35 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/2/</guid>
+				<description>&lt;h1 id=&#34;添加--和---运算符&#34;&gt;添加 + 和 - 运算符&lt;/h1&gt;&#xA;&lt;p&gt;expr    ::= NUMBER subexpr?&#xA;subexpr ::= + expr&#xA;| - expr&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>tinycc</title>
+				<link>https://rendcrx.github.io/posts/compiler/tinycc/tcc2/</link>
+				<pubDate>Tue, 19 May 2026 17:46:41 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/tinycc/tcc2/</guid>
+				<description>&lt;h1 id=&#34;tcc-的词法分析二&#34;&gt;tcc 的词法分析(二)&lt;/h1&gt;&#xA;&lt;p&gt;宏只处理 define&lt;/p&gt;&#xA;&lt;p&gt;做法是如果遇到宏，就跳转过去读，作为最新的 token 然后返回&lt;/p&gt;&#xA;&lt;h2 id=&#34;结构&#34;&gt;结构&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;符号表&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;char *idtable&lt;/code&gt; 是一个字符数组，存储着每一个符号。符号之间用 &amp;lsquo;\0&amp;rsquo; 分割&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;char *idptr, *idlast&lt;/code&gt; 辅助指针&#xA;&lt;ul&gt;&#xA;&lt;li&gt;idptr 指向字符数组第一个空位置&lt;/li&gt;&#xA;&lt;li&gt;idlast 指向符号表中最后的一个符号(插入新符号的时候，重置该指针)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;tinycc 在处理文本的时候，除了运算符和数字，都视为符号&lt;/p&gt;&#xA;&lt;p&gt;返回的时候 token 表明了符号位于符号表的位置（第几个符号）&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;从 256 开始记的&lt;/li&gt;&#xA;&lt;li&gt;前面的属于关键字&lt;/li&gt;&#xA;&lt;li&gt;因为字符直接使用数值作为类型，因此根据 ascii 从 256 开始是符号(包括关键字)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;步骤：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;只要第一个判断属于符号，进入符号的状态机，逐个字符插入符号表&lt;/li&gt;&#xA;&lt;li&gt;比较判断是否为关键字，如果是的话，保持 idptr 不变，同时更新 tok&lt;/li&gt;&#xA;&lt;li&gt;如果不是关键字的话，更新 idptr&lt;/li&gt;&#xA;&lt;li&gt;判断该符号是否位于宏替换的范围，如果是的话，不要立即返回&lt;/li&gt;&#xA;&lt;li&gt;记录当前输入流读取位置，到宏栈中（维护了一个栈）&lt;/li&gt;&#xA;&lt;li&gt;设置输入流的位置到宏替换的位置&lt;/li&gt;&#xA;&lt;li&gt;重新调用 next() 来读取替换的符号&lt;/li&gt;&#xA;&lt;li&gt;直到行尾，替换结束，根据宏栈的地址，跳转回来（允许嵌套宏）&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;&lt;strong&gt;宏&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;步骤：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;如果当前符号是 #, 进入分支&lt;/li&gt;&#xA;&lt;li&gt;取下一个符号，如果下一个符号就是 define 关键字（固定 token 类型）&lt;/li&gt;&#xA;&lt;li&gt;读取下一个符号到符号表中，同时更新 vat 和 vac, 在该符号位置记录了符号类型和数值&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;对于 define 的符号类型就是 VT_DEFINE, 数值就是文件流的位置，就是现在&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;ol start=&#34;4&#34;&gt;&#xA;&lt;li&gt;一直跳过字符不再读取了，这部分是宏替换的内容。直到读取完换行符为止&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;宏替换时：&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>tinycc</title>
+				<link>https://rendcrx.github.io/posts/compiler/tinycc/tcc1/</link>
+				<pubDate>Tue, 28 Apr 2026 17:51:41 +0800</pubDate>
+				<guid>https://rendcrx.github.io/posts/compiler/tinycc/tcc1/</guid>
+				<description>&lt;blockquote&gt;&#xA;&lt;p&gt;tcc&amp;rsquo;s first commit&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;h1 id=&#34;tcc-的词法分析一&#34;&gt;tcc 的词法分析(一)&lt;/h1&gt;&#xA;&lt;p&gt;一个语言的词法分析，三个状态图就可以了：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;标识符&lt;/li&gt;&#xA;&lt;li&gt;常量&lt;/li&gt;&#xA;&lt;li&gt;符号&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;tinycc 的常量甚至不做处理，只进行了标识符和符号的识别&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;可能是在词法分析的地方再处理&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;空白&#34;&gt;空白&lt;/h2&gt;&#xA;&lt;p&gt;利用一个死循环，持续探测到非空白时才退出&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;while(1) {&#xA;    c = inp();&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;每次进入的时候，需要取一次字符&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;} else if (c != &amp;#39; &amp;#39; &amp;amp; c != 9)&#xA;  break;&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;退出条件&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;标识符&#34;&gt;标识符&lt;/h2&gt;&#xA;&lt;p&gt;关键字区分：利用了常见的做法&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;提前将关键字放入到符号表中&lt;/li&gt;&#xA;&lt;li&gt;使用一个状态图来进行判断&lt;/li&gt;&#xA;&lt;li&gt;如果是标识符，再判断符号表中是否已经存在该符号了&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;巧妙的地方：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;标识符的 TOKEN 类型标识不是乱取的&lt;/li&gt;&#xA;&lt;li&gt;而是符号表中，该符号对应的位置索引&lt;/li&gt;&#xA;&lt;li&gt;通过该标识符的 TOKEN 数值，既可以判断类型，也可以获取地址&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;符号&#34;&gt;符号&lt;/h2&gt;&#xA;&lt;p&gt;对于单符号和双符号，利用 &lt;code&gt;ungetc&lt;/code&gt; 来纠错&lt;/p&gt;&#xA;&lt;p&gt;巧妙的地方：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;对于大部分的单符号，直接用符号值表示类型（同样可以获取到值）&lt;/li&gt;&#xA;&lt;li&gt;对于双符号和 &lt;code&gt;&amp;lt;&lt;/code&gt;, &lt;code&gt;&amp;gt;&lt;/code&gt; 直接用二进制码表示类型，方便代码生成？&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;加速&#34;&gt;加速&lt;/h1&gt;&#xA;&lt;p&gt;对于用到数值的地方，尽量做到一值两用，甚至三用&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;减少查表：符号表中，标识符直接对应于符号表的索引&lt;/li&gt;&#xA;&lt;li&gt;减少转换：运算符中，类型直接就是运算符&lt;/li&gt;&#xA;&lt;li&gt;减少映射：生成代码的时候不用类型重新映射二进制代码了，类型就是二进制代码&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
+			</item>
+	</channel>
 </rss>
