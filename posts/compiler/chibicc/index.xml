@@ -14,80 +14,80 @@
 		
 			<atom:link href="https://rendcrx.github.io/posts/compiler/chibicc/index.xml" rel="self" type="application/rss+xml" />
 			<item>
-				<title>支持多字母的局部变量</title>
-				<link>https://rendcrx.github.io/posts/compiler/chibicc/11/</link>
+				<title>11. 支持多字母的局部变量</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/11.-%E6%94%AF%E6%8C%81%E5%A4%9A%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/</link>
 				<pubDate>Sun, 31 May 2026 14:33:51 +0800</pubDate>
-				<guid>https://rendcrx.github.io/posts/compiler/chibicc/11/</guid>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/11.-%E6%94%AF%E6%8C%81%E5%A4%9A%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/</guid>
 				<description>&lt;h1 id=&#34;支持多字母的局部变量&#34;&gt;支持多字母的局部变量&lt;/h1&gt;</description>
 			</item>
 			<item>
-				<title>支持单个字母的局部变量</title>
-				<link>https://rendcrx.github.io/posts/compiler/chibicc/10/</link>
+				<title>10. 支持单个字母的局部变量</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/10.-%E6%94%AF%E6%8C%81%E5%8D%95%E4%B8%AA%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/</link>
 				<pubDate>Sun, 31 May 2026 14:16:13 +0800</pubDate>
-				<guid>https://rendcrx.github.io/posts/compiler/chibicc/10/</guid>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/10.-%E6%94%AF%E6%8C%81%E5%8D%95%E4%B8%AA%E5%AD%97%E6%AF%8D%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F/</guid>
 				<description>&lt;h1 id=&#34;支持单个字母的局部变量&#34;&gt;支持单个字母的局部变量&lt;/h1&gt;&#xA;&lt;p&gt;变量：内存的一个别名&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;环境中的一个映射&lt;/li&gt;&#xA;&lt;li&gt;变量本质就是一个映射&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;program    ::= stmt*&#xA;stmt       ::= expr-stmt&#xA;expr-stmt  ::= expr &amp;#34;;&amp;#34;&#xA;expr       ::= assign&#xA;assign     ::= equality (&amp;#34;=&amp;#34; assign)?&#xA;equality   ::= relational (&amp;#34;==&amp;#34; relational | &amp;#34;!=&amp;#34; relational)*&#xA;relational ::= add (&amp;#34;&amp;lt;&amp;#34; add | &amp;#34;&amp;lt;=&amp;#34; add | &amp;#34;&amp;gt;&amp;#34; add | &amp;#34;&amp;gt;=&amp;#34; add)*&#xA;add        ::= mul (&amp;#34;+&amp;#34; mul | &amp;#34;-&amp;#34; mul)*&#xA;mul        ::= unary (&amp;#34;\*&amp;#34; unary | &amp;#34;/&amp;#34; unary)*&#xA;unary      ::= (&amp;#34;+&amp;#34; | &amp;#34;-&amp;#34;) unary&#xA;             | primary&#xA;primary    ::= &amp;#34;(&amp;#34; expr &amp;#34;)&amp;#34; | IDENT | NUM&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;实现&#34;&gt;实现&lt;/h1&gt;&#xA;&lt;p&gt;这里先用了一个简单的方案：&lt;/p&gt;</description>
 			</item>
 			<item>
-				<title>接受多个通过分号分割的语句</title>
-				<link>https://rendcrx.github.io/posts/compiler/chibicc/9/</link>
+				<title>09. 接受多个通过分号分割的语句</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/09.-%E6%8E%A5%E5%8F%97%E5%A4%9A%E4%B8%AA%E9%80%9A%E8%BF%87%E5%88%86%E5%8F%B7%E5%88%86%E5%89%B2%E7%9A%84%E8%AF%AD%E5%8F%A5/</link>
 				<pubDate>Sun, 31 May 2026 13:58:02 +0800</pubDate>
-				<guid>https://rendcrx.github.io/posts/compiler/chibicc/9/</guid>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/09.-%E6%8E%A5%E5%8F%97%E5%A4%9A%E4%B8%AA%E9%80%9A%E8%BF%87%E5%88%86%E5%8F%B7%E5%88%86%E5%89%B2%E7%9A%84%E8%AF%AD%E5%8F%A5/</guid>
 				<description>&lt;h1 id=&#34;接受多个通过分号分割的语句&#34;&gt;接受多个通过分号分割的语句&lt;/h1&gt;&#xA;&lt;p&gt;C 语言是通过一系列的语句组合的&lt;/p&gt;&#xA;&lt;p&gt;每个语句都进行代码生成&lt;/p&gt;&#xA;&lt;p&gt;之间同样通过接口关联&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;program    ::= stmt*&#xA;stmt       ::= expr-stmt&#xA;expr-stmt  ::= expr &amp;#34;;&amp;#34;&#xA;expr       ::= equality&#xA;equality   ::= relational (&amp;#34;==&amp;#34; relational | &amp;#34;!=&amp;#34; relational)*&#xA;relational ::= add (&amp;#34;&amp;lt;&amp;#34; add | &amp;#34;&amp;lt;=&amp;#34; add | &amp;#34;&amp;gt;&amp;#34; add | &amp;#34;&amp;gt;=&amp;#34; add)*&#xA;add        ::= mul (&amp;#34;+&amp;#34; mul | &amp;#34;-&amp;#34; mul)*&#xA;mul        ::= unary (&amp;#34;\*&amp;#34; unary | &amp;#34;/&amp;#34; unary)*&#xA;unary      ::= (&amp;#34;+&amp;#34; | &amp;#34;-&amp;#34;) unary&#xA;             | primary&#xA;primary    ::= &amp;#34;(&amp;#34; expr &amp;#34;)&amp;#34; | NUM&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;代码生成还是基于 AST 的&lt;/p&gt;</description>
 			</item>
 			<item>
-				<title>分离文件</title>
-				<link>https://rendcrx.github.io/posts/compiler/chibicc/8/</link>
+				<title>08. 分离文件</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/08.-%E5%88%86%E7%A6%BB%E6%96%87%E4%BB%B6/</link>
 				<pubDate>Sun, 31 May 2026 10:45:04 +0800</pubDate>
-				<guid>https://rendcrx.github.io/posts/compiler/chibicc/8/</guid>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/08.-%E5%88%86%E7%A6%BB%E6%96%87%E4%BB%B6/</guid>
 				<description>&lt;h1 id=&#34;分离文件&#34;&gt;分离文件&lt;/h1&gt;&#xA;&lt;p&gt;模块化文件：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;tokenize&lt;/li&gt;&#xA;&lt;li&gt;parse&lt;/li&gt;&#xA;&lt;li&gt;codegen&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
 			</item>
 			<item>
-				<title>添加比较运算符</title>
-				<link>https://rendcrx.github.io/posts/compiler/chibicc/7/</link>
+				<title>07. 添加比较运算符</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/07.-%E6%B7%BB%E5%8A%A0%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6/</link>
 				<pubDate>Sun, 31 May 2026 10:09:25 +0800</pubDate>
-				<guid>https://rendcrx.github.io/posts/compiler/chibicc/7/</guid>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/07.-%E6%B7%BB%E5%8A%A0%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6/</guid>
 				<description>&lt;h1 id=&#34;添加比较运算符&#34;&gt;添加比较运算符&lt;/h1&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;expr       ::= equality&#xA;equality   ::= relational (&amp;#34;==&amp;#34; relational | &amp;#34;!=&amp;#34; relational)*&#xA;relational ::= add (&amp;#34;&amp;lt;&amp;#34; add | &amp;#34;&amp;lt;=&amp;#34; add | &amp;#34;&amp;gt;&amp;#34; add | &amp;#34;&amp;gt;=&amp;#34; add)*&#xA;add        ::= mul (&amp;#34;+&amp;#34; mul | &amp;#34;-&amp;#34; mul)*&#xA;mul        ::= unary (&amp;#34;\*&amp;#34; unary | &amp;#34;/&amp;#34; unary)*&#xA;unary      ::= (&amp;#34;+&amp;#34; | &amp;#34;-&amp;#34;) unary&#xA;             | primary&#xA;primary    ::= &amp;#34;(&amp;#34; expr &amp;#34;)&amp;#34; | NUM&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;&#xA;&lt;li&gt;写新的文法&lt;/li&gt;&#xA;&lt;li&gt;添加新的 node 节点&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;注意运算符顺序&lt;/p&gt;&#xA;&lt;h1 id=&#34;代码生成&#34;&gt;代码生成&lt;/h1&gt;&#xA;&lt;p&gt;同样每个新节点，生成新的代码&lt;/p&gt;</description>
 			</item>
 			<item>
-				<title>添加一元的加法和减法</title>
-				<link>https://rendcrx.github.io/posts/compiler/chibicc/6/</link>
+				<title>06. 添加一元的加法和减法</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/06.-%E6%B7%BB%E5%8A%A0%E4%B8%80%E5%85%83%E7%9A%84%E5%8A%A0%E6%B3%95%E5%92%8C%E5%87%8F%E6%B3%95/</link>
 				<pubDate>Sun, 31 May 2026 09:52:40 +0800</pubDate>
-				<guid>https://rendcrx.github.io/posts/compiler/chibicc/6/</guid>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/06.-%E6%B7%BB%E5%8A%A0%E4%B8%80%E5%85%83%E7%9A%84%E5%8A%A0%E6%B3%95%E5%92%8C%E5%87%8F%E6%B3%95/</guid>
 				<description>&lt;h1 id=&#34;添加一元的加法和减法&#34;&gt;添加一元的加法和减法&lt;/h1&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;expr    ::= mul (&amp;#34;+&amp;#34; mul | &amp;#34;-&amp;#34; mul)*&#xA;mul     ::= unary (&amp;#34;\*&amp;#34; unary | &amp;#34;/&amp;#34; unary)*&#xA;unary   ::= (&amp;#34;+&amp;#34; | &amp;#34;-&amp;#34;) unary&#xA;          | primary&#xA;primary ::= &amp;#34;(&amp;#34; expr &amp;#34;)&amp;#34; | NUM&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;代码生成&#34;&gt;代码生成&lt;/h1&gt;&#xA;&lt;p&gt;注意：多添加了节点类型&lt;/p&gt;&#xA;&lt;p&gt;每一个节点类型都需要有一个代码生成&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;neg&lt;/code&gt; 取反&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
 			</item>
 			<item>
-				<title>chibicc</title>
-				<link>https://rendcrx.github.io/posts/compiler/chibicc/5/</link>
+				<title>05. 支持乘除运算符</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/05.-%E6%94%AF%E6%8C%81%E4%B9%98%E9%99%A4%E8%BF%90%E7%AE%97%E7%AC%A6/</link>
 				<pubDate>Sun, 31 May 2026 09:13:19 +0800</pubDate>
-				<guid>https://rendcrx.github.io/posts/compiler/chibicc/5/</guid>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/05.-%E6%94%AF%E6%8C%81%E4%B9%98%E9%99%A4%E8%BF%90%E7%AE%97%E7%AC%A6/</guid>
 				<description>&lt;h1 id=&#34;支持---运算符&#34;&gt;支持 * / 运算符&lt;/h1&gt;&#xA;&lt;p&gt;关键：和 + 和 - 比起来，有更高的优先级&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;expr    ::= mul (&amp;#34;+&amp;#34; mul | &amp;#34;-&amp;#34; mul)*&#xA;mul     ::= primary (&amp;#34;\*&amp;#34; primaty | &amp;#34;/&amp;#34; primary)*&#xA;primary ::= &amp;#34;(&amp;#34; expr &amp;#34;)&amp;#34; | NUM&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;代码生成&#34;&gt;代码生成&lt;/h1&gt;&#xA;&lt;p&gt;我们为每一个节点都生成代码&lt;/p&gt;&#xA;&lt;p&gt;接口就是 rax，每个节点都是一个表达式，结果放在 rax 中&lt;/p&gt;&#xA;&lt;p&gt;使用栈结构来存储中间结果&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;imul&lt;/code&gt;: integer mul, 有符号整数乘法&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;idiv&lt;/code&gt;: 有符号除法，默认的被除数和结果都是在 rdx:rax 当中&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;cqo&lt;/code&gt;: convert quadword to octaword, rax 扩展到 rdx:rax 的寄存器中&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
 			</item>
 			<item>
-				<title>改善错误信息</title>
-				<link>https://rendcrx.github.io/posts/compiler/chibicc/4/</link>
+				<title>04. 改善错误信息</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/04.-%E6%94%B9%E5%96%84%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF/</link>
 				<pubDate>Sun, 31 May 2026 08:40:09 +0800</pubDate>
-				<guid>https://rendcrx.github.io/posts/compiler/chibicc/4/</guid>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/04.-%E6%94%B9%E5%96%84%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF/</guid>
 				<description>&lt;h1 id=&#34;改善错误信息&#34;&gt;改善错误信息&lt;/h1&gt;&#xA;&lt;p&gt;这里只处理词法分析的错误&lt;/p&gt;&#xA;&lt;p&gt;记录当时的错误位置&lt;/p&gt;&#xA;&lt;p&gt;在下面打印出错误信息&lt;/p&gt;</description>
 			</item>
 			<item>
-				<title>允许空白字符</title>
-				<link>https://rendcrx.github.io/posts/compiler/chibicc/3/</link>
+				<title>03. 允许空白字符</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/03.-%E5%85%81%E8%AE%B8%E7%A9%BA%E7%99%BD%E5%AD%97%E7%AC%A6/</link>
 				<pubDate>Sun, 31 May 2026 08:11:22 +0800</pubDate>
-				<guid>https://rendcrx.github.io/posts/compiler/chibicc/3/</guid>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/03.-%E5%85%81%E8%AE%B8%E7%A9%BA%E7%99%BD%E5%AD%97%E7%AC%A6/</guid>
 				<description>&lt;h1 id=&#34;允许空白字符&#34;&gt;允许空白字符&lt;/h1&gt;&#xA;&lt;p&gt;我们需要忽略空白字符&lt;/p&gt;&#xA;&lt;p&gt;现在开始，添加 token 了&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;类别&lt;/li&gt;&#xA;&lt;li&gt;如果类别集合中有多个内容，还需要提供具体内容&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;目前有两个类型：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;数字&lt;/li&gt;&#xA;&lt;li&gt;标点符号&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h1 id=&#34;技术选型&#34;&gt;技术选型&lt;/h1&gt;&#xA;&lt;p&gt;这里使用了 multipass 的方式&lt;/p&gt;&#xA;&lt;p&gt;通过一个 tokenize 函数，来完整扫描字符串，生成 token 链表&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;用链表来管理 token&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
 			</item>
 			<item>
-				<title>最小的 C 编译器</title>
-				<link>https://rendcrx.github.io/posts/compiler/chibicc/1/</link>
+				<title>01. 最小的 C 编译器</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/01.-%E6%9C%80%E5%B0%8F%E7%9A%84-c-%E7%BC%96%E8%AF%91%E5%99%A8/</link>
 				<pubDate>Sun, 31 May 2026 07:47:35 +0800</pubDate>
-				<guid>https://rendcrx.github.io/posts/compiler/chibicc/1/</guid>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/01.-%E6%9C%80%E5%B0%8F%E7%9A%84-c-%E7%BC%96%E8%AF%91%E5%99%A8/</guid>
 				<description>&lt;h1 id=&#34;最小的-c-编译器&#34;&gt;最小的 C 编译器&lt;/h1&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;命令行参数接受一个字符串输入作为参数&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;要求是数字&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;ol start=&#34;2&#34;&gt;&#xA;&lt;li&gt;这个编译器把这个数字作为返回值来返回&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h1 id=&#34;如何做&#34;&gt;如何做&lt;/h1&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;C 编译器要求我们必须有一个 main 函数&lt;/li&gt;&#xA;&lt;li&gt;C 编译器要求函数的返回值只有一个，用 eax 作为返回值&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;所以我们只需要先创建 main 函数：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;.globl main&#xA;main:&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后把返回值传递给 eax：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;movl $0, %eax&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;函数要求返回：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ret&#xA;&lt;/code&gt;&lt;/pre&gt;</description>
 			</item>
 			<item>
-				<title>添加 &#43; 和 - 运算符</title>
-				<link>https://rendcrx.github.io/posts/compiler/chibicc/2/</link>
+				<title>02. 添加 &#43; 和 - 运算符</title>
+				<link>https://rendcrx.github.io/posts/compiler/chibicc/02.-%E6%B7%BB%E5%8A%A0-&#43;-%E5%92%8C---%E8%BF%90%E7%AE%97%E7%AC%A6/</link>
 				<pubDate>Sun, 31 May 2026 07:47:35 +0800</pubDate>
-				<guid>https://rendcrx.github.io/posts/compiler/chibicc/2/</guid>
+				<guid>https://rendcrx.github.io/posts/compiler/chibicc/02.-%E6%B7%BB%E5%8A%A0-&#43;-%E5%92%8C---%E8%BF%90%E7%AE%97%E7%AC%A6/</guid>
 				<description>&lt;h1 id=&#34;添加--和---运算符&#34;&gt;添加 + 和 - 运算符&lt;/h1&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;expr    ::= NUMBER subexpr?&#xA;subexpr ::= + expr&#xA;          | - expr&#xA;&lt;/code&gt;&lt;/pre&gt;</description>
 			</item>
 	</channel>
